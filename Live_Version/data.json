@@ -1,0 +1,137 @@
+{
+    "metadata": {
+      "vendors": [
+        "2GiC",
+        "ATOUTEK",
+        "ATELIERS DU BOCAGE",
+        "AVEGOTT",
+        "BRING IT BACK",
+        "COQWEL",
+        "DRJL",
+        "E-RECYCLE",
+        "ECO MOBILE SOLUTION",
+        "ECOD'AIR - EA",
+        "EXCEPCIO LOGISTIQUE",
+        "FIRPO & CO",
+        "GLASSY TECH",
+        "GZ SUPPLY",
+        "KABILOO SARL",
+        "LARGO",
+        "LE GSM",
+        "LEASETIC",
+        "LM ECO PRODUCTION",
+        "MOBILE RECYCLE",
+        "PHONE RECYCLE BUSINESS",
+        "PRESTAPHONE PONT DE BEAUVOISIN",
+        "QBP SAS",
+        "RECONNECT",
+        "REMADE TECHNOLOGY COMPANY",
+        "SAS NINETY",
+        "SENS TECHNOLOGIES",
+        "SLS REPAIR",
+        "SMART-REPA",
+        "SOFI GROUP",
+        "SOFIGROUP",
+        "TELECOMBACK",
+        "TELEPHONE CENTER",
+        "Tech-Green",
+        "YESAGAIN"
+      ],
+      "marques": [
+        "Acer",
+        "Apple",
+        "Asus",
+        "BlackBerry",
+        "Crosscall",
+        "DORO",
+        "Dell",
+        "Echo",
+        "Fairphone",
+        "Google",
+        "HP",
+        "HTC",
+        "Honor",
+        "Huawei",
+        "LG",
+        "Lenovo",
+        "Microsoft",
+        "Mobiwire",
+        "Motorola",
+        "Nokia",
+        "OnePlus",
+        "Oppo",
+        "Orange",
+        "Panasonic",
+        "QBP",
+        "Samsung",
+        "Sony",
+        "Toshiba",
+        "Wiko",
+        "Xiaomi"
+      ],
+      "grades": [
+        "FAIR",
+        "GOOD",
+        "MINT",
+        "VERY_GOOD"
+      ],
+      "couleurs": [
+        "Argent",
+        "Blanc",
+        "Bleu",
+        "Bronze",
+        "Gris",
+        "Gris Sidéral",
+        "Jaune",
+        "Noir",
+        "Or",
+        "Rose",
+        "Rouge",
+        "Vert",
+        "Violet"
+      ],
+      "capacites": [
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        1024
+      ],
+      "dateGeneration": "2024-02-10T15:30:00.000Z",
+      "stats": {
+        "totalProduits": 62148,
+        "produitsEnStock": 1892,
+        "produitsSansStock": 60256,
+        "prixMoyen": 284.73,
+        "statsPourcentageParMarque": {
+          "Apple": {
+            "nombreTotal": 33297,
+            "pourcentageDuTotal": "53.58%",
+            "enStock": 782
+          },
+          "Samsung": {
+            "nombreTotal": 15243,
+            "pourcentageDuTotal": "24.53%",
+            "enStock": 521
+          }
+        }
+      }
+    },
+    "products": [
+      {
+        "sku": "W-18472-16-17",
+        "Marque": "Apple",
+        "Modele": "iPhone 5s",
+        "Couleur": "Gris Sidéral",
+        "Capacite": 16,
+        "Grade": "FAIR",
+        "Quantite": 0,
+        "Prix": 0,
+        "Status": "validated",
+        "Nom vendeur": "Bak2 Services"
+      }
+    ]
+  }

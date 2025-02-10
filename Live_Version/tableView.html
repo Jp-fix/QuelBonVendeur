@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison des Produits</title>
+    
+    <!-- CDN Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fichier CSS personnalisé -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <div class="p-6 space-y-6">
+        <!-- Navigation -->
+        <nav class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Comparaison des Produits</h1>
+            <div class="space-x-4">
+                <a href="index.html" class="text-blue-600 hover:text-blue-800">Vue Catalogue</a>
+                <a href="compare.html" class="text-blue-600 hover:text-blue-800 font-bold">Vue Comparaison</a>
+            </div>
+        </nav>
+
+        <!-- Sélecteur de vendeur -->
+        <div class="mb-6">
+            <select id="vendorSelect" class="px-4 py-2 border rounded-md w-[280px]">
+                <option value="all">Sélectionner un vendeur</option>
+                <!-- Les vendeurs seront injectés ici via JavaScript -->
+            </select>
+        </div>
+
+        <!-- Tableau de comparaison -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modèle</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacité</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix Catalogue</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix Vendeur</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Différence</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="compareTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Les données seront injectées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fichiers JavaScript -->
+    <script src="data.js"></script>
+    <script src="compare.js"></script>
+</body>
+</html>
