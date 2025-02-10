@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Application de catalogue de produits",
   "scripts": {
-    "start": "serve -s .",
-    "build": "echo 'No build step needed'"
+    "start": "npx serve /dist",
+    "build": "mkdir -p dist && cp -r *.html *.js *.css dist/"
   },
   "dependencies": {
     "serve": "^14.2.1"
