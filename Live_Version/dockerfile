@@ -1,11 +1,10 @@
-FROM node:18-alpine
+FROM nginx:alpine
 
-WORKDIR /app
+# Copier les fichiers du projet dans le dossier de nginx
+COPY . /usr/share/nginx/html
 
-COPY package*.json ./
-RUN npm install
+# Exposer le port 80
+EXPOSE 80
 
-COPY . .
-
-EXPOSE 3000
-CMD ["npm", "start"]
+# Démarrer nginx
+CMD ["nginx", "-g", "daemon off;"]

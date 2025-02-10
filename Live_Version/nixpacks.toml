@@ -1,4 +1,0 @@
-[
-start
-]
-cmd = "npx serve /dist"
