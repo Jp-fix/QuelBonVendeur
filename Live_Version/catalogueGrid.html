@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Grille Catalogue</title>
+    
+    <!-- CDN Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Integration des données -->
+    <script src="data.js"></script>
+    
+    <!-- Fichier CSS personnalisé -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100">
+    <div class="p-6 space-y-6">
+        <!-- En-tête -->
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Vue Grille Catalogue</h1>
+            <div class="bg-white shadow rounded-lg">
+                <div class="p-4 flex items-center justify-between">
+                    <nav class="flex gap-6">
+                        <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Catalogue
+                        </a>
+                        <a href="tableView.html" class="text-blue-600 font-semibold border-b-2 border-blue-600">
+                            Comparaison
+                        </a>
+                        <a href="catalogueGrid.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Vue Grille
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtres -->
+        <div class="flex flex-wrap gap-4 mb-6">
+            <select id="marqueFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Toutes les marques</option>
+                <!-- Les marques seront injectées ici -->
+            </select>
+
+            <select id="stockFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Tous les statuts</option>
+                <option value="inStock">En stock</option>
+                <option value="outOfStock">Hors stock</option>
+                <option value="missing">Manquant</option>
+            </select>
+
+            <input 
+                type="text" 
+                id="searchInput"
+                class="px-4 py-2 border rounded-md flex-grow" 
+                placeholder="Rechercher un modèle..."
+            >
+        </div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Total Modèles</div>
+                <div id="totalModels" class="mt-2 text-3xl font-bold">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">En Stock</div>
+                <div id="inStock" class="mt-2 text-3xl font-bold text-green-600">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Hors Stock</div>
+                <div id="outOfStock" class="mt-2 text-3xl font-bold text-red-600">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Manquants</div>
+                <div id="missing" class="mt-2 text-3xl font-bold text-yellow-600">0</div>
+            </div>
+        </div>
+
+        <!-- Légende -->
+        <div class="flex gap-4 bg-white p-4 rounded-lg shadow">
+            <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-green-100 rounded"></div>
+                <span>En stock</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-red-100 rounded"></div>
+                <span>Hors stock</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="w-4 h-4 bg-gray-100 rounded"></div>
+                <span>Manquant du catalogue</span>
+            </div>
+        </div>
+
+        <!-- Grille des produits -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div id="brandSections" class="space-y-8">
+                <!-- Les sections de marques seront injectées ici -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Script personnalisé pour la vue grille -->
+    <script src="catalogueGrid.js"></script>
+</body>
+</html>

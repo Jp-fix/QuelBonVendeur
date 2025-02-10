@@ -3,31 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparaison des Produits</title>
+    <title>Comparaison des Catalogues</title>
     
     <!-- CDN Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Integration des données -->
+    <script src="data.js"></script>
     
     <!-- Fichier CSS personnalisé -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100">
     <div class="p-6 space-y-6">
-        <!-- Navigation -->
-        <nav class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold">Comparaison des Produits</h1>
-            <div class="space-x-4">
-                <a href="index.html" class="text-blue-600 hover:text-blue-800">Vue Catalogue</a>
-                <a href="compare.html" class="text-blue-600 hover:text-blue-800 font-bold">Vue Comparaison</a>
+        <!-- En-tête -->
+        <div class="bg-white shadow rounded-lg">
+            <div class="p-4 flex items-center justify-between">
+                <h1 class="text-2xl font-bold">BackMarket Tools</h1>
+                <nav class="flex gap-6">
+                    <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                        Catalogue
+                    </a>
+                    <a href="tableView.html" class="text-blue-600 font-semibold border-b-2 border-blue-600">
+                        Comparaison
+                    </a>
+                    <a href="catalogueGrid.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                        Vue Grille
+                    </a>
+                </nav>
             </div>
-        </nav>
-
-        <!-- Sélecteur de vendeur -->
-        <div class="mb-6">
+        </div>
+        <!-- Filtres -->
+        <div class="flex flex-wrap gap-4 mb-6">
             <select id="vendorSelect" class="px-4 py-2 border rounded-md w-[280px]">
-                <option value="all">Sélectionner un vendeur</option>
-                <!-- Les vendeurs seront injectés ici via JavaScript -->
+                <option value="">Sélectionner un vendeur</option>
+                <!-- Les vendeurs seront injectés ici -->
             </select>
+
+            <select id="brandFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Toutes les marques</option>
+                <!-- Les marques seront injectées ici -->
+            </select>
+
+            <input 
+                type="text" 
+                id="modelFilter"
+                class="px-4 py-2 border rounded-md w-[280px]" 
+                placeholder="Rechercher un modèle..."
+            >
+        </div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Total Produits</div>
+                <div id="totalProducts" class="mt-2 text-3xl font-bold">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Produits Communs</div>
+                <div id="commonProducts" class="mt-2 text-3xl font-bold text-blue-600">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Diff. Prix Moyenne</div>
+                <div id="avgPriceDiff" class="mt-2 text-3xl font-bold text-green-600">0 €</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Taux Complétion</div>
+                <div id="completionRate" class="mt-2 text-3xl font-bold text-purple-600">0%</div>
+            </div>
         </div>
 
         <!-- Tableau de comparaison -->
@@ -36,26 +79,65 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modèle</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Marque</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacité</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Grade</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix Catalogue</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix Vendeur</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Différence</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="sku">
+                                <div class="flex items-center space-x-1">
+                                    <span>SKU</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="marque">
+                                <div class="flex items-center space-x-1">
+                                    <span>Marque</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="modele">
+                                <div class="flex items-center space-x-1">
+                                    <span>Modèle</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="grade">
+                                <div class="flex items-center space-x-1">
+                                    <span>Grade</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="prixRef">
+                                <div class="flex items-center space-x-1">
+                                    <span>Prix Ref.</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="prixVendeur">
+                                <div class="flex items-center space-x-1">
+                                    <span>Prix Vendeur</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="difference">
+                                <div class="flex items-center space-x-1">
+                                    <span>Différence</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="status">
+                                <div class="flex items-center space-x-1">
+                                    <span>Status</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody id="compareTable" class="bg-white divide-y divide-gray-200">
-                        <!-- Les données seront injectées ici -->
+                    <tbody id="comparisonTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Les données seront injectées ici via JavaScript -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Fichiers JavaScript -->
-    <script src="data.js"></script>
-    <script src="compare.js"></script>
+    <!-- Script personnalisé pour la logique de comparaison -->
+    <script src="catalogueComparison.js"></script>
 </body>
 </html>

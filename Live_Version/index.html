@@ -17,9 +17,26 @@
 </head>
 <body class="bg-gray-100">
     <div class="p-6 space-y-6">
+                <!-- Navigation -->
+                <div class="bg-white shadow rounded-lg">
+                    <div class="p-4 flex items-center justify-between">
+                        <h1 class="text-2xl font-bold">QuelBonVendeur</h1>
+                        <nav class="flex gap-6">
+                            <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                                Catalogue
+                            </a>
+                            <a href="tableView.html" class="text-blue-600 font-semibold border-b-2 border-blue-600">
+                                Comparaison
+                            </a>
+                            <a href="catalogueGrid.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                                Vue Grille
+                            </a>
+                        </nav>
+                    </div>
+                </div>
         <!-- En-tête avec sélecteur de vendeur -->
         <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Détails du Catalogue</h1>
+            <h1 class="text-2xl font-bold">Vue d'ensemble du catalogue</h1>
             <select id="vendorSelect" class="px-4 py-2 border rounded-md w-[280px]">
                 <option value="">Sélectionner un vendeur</option>
                 <!-- Les vendeurs seront injectés ici via JavaScript -->
@@ -44,7 +61,7 @@
 
         <!-- Graphique des stocks -->
         <div id="stockChart" class="bg-white rounded-lg shadow p-4 mb-6">
-            <h2 class="text-lg font-semibold mb-4">Évolution des stocks par vendeur</h2>
+            <h2 class="text-lg font-semibold mb-4">Évolution du catalogue QBP</h2>
             <div id="stockChartContainer" class="h-64"></div>
         </div>
 
