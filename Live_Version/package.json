@@ -1,0 +1,16 @@
+{
+    "name": "quel-bon-vendeur",
+    "version": "1.0.0",
+    "description": "Application de catalogue de produits",
+    "main": "index.js",
+    "scripts": {
+      "start": "serve -s .",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "serve": "^14.2.1",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "recharts": "^2.12.0"
+    }
+  }
