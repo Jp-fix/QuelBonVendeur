@@ -505,8 +505,7 @@ const APP_DATA = {
                     Status: "validated",
                     "Nom vendeur": "ATELIERS DU BOCAGE"
                 },
-                [
-                    {
+                  {
                       sku: "RECO3878SAMSUNGGALAXYS20ULTRANOIR128GB",
                       Marque: "Samsung",
                       Modele: "Galaxy S20 Ultra 5G",
@@ -903,5 +902,4 @@ const APP_DATA = {
                       "Nom vendeur": "DRJL"
                     }
                 ]
-            ]
-        }
+              }
