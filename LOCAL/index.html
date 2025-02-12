@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue Détaillé</title>
+    <!-- CDN Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Fichier CSS personnalisé -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="bg-gray-100">
+    <div class="p-6 space-y-6">
+                <!-- Navigation -->
+                <div class="bg-white shadow rounded-lg">
+                    <div class="p-4 flex items-center justify-between">
+                        <h1 class="text-2xl font-bold"><a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">QuelBonVendeur</h1></a>
+                        <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Accueil
+                        </a>
+                        <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Détail par vendeur
+                        </a>
+                        <a href="productLifeTimeValue.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Suivi des prix
+                        </a>
+                        <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
+                            <option value="all">Tous les vendeurs</option>
+                        </select>
+                    </div>
+                </div>
+        <!-- En-tête avec sélecteur de vendeur -->
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Vue d'ensemble</h1>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">ProductStock</div>
+                <div id="totalProducts" class="mt-2 text-3xl font-bold">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">En Stock (Sku > 0)</div>
+                <div id="inStock" class="mt-2 text-3xl font-bold text-green-600">0</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">ProductStock (Sku > 0 & Stock = 0)</div>
+                <div id="outOfStock" class="mt-2 text-3xl font-bold text-red-600">0</div>
+            </div>
+        </div>
+
+        <!-- Graphique des stocks -->
+        <div id="stockChart" class="bg-white rounded-lg shadow p-4 mb-6">
+            <h2 class="text-lg font-semibold mb-4">Évolution du catalogue QBP</h2>
+            <div id="stockChartContainer" class="h-64"></div>
+        </div>
+
+        
+
+        <!-- Filtres -->
+        <div class="flex flex-wrap gap-4 mb-6">
+            <input 
+                type="text" 
+                id="searchInput"
+                class="px-4 py-2 border rounded-md max-w-sm" 
+                placeholder="Rechercher..."
+            >
+            
+            <select id="stockStatusFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Tous les produits</option>
+                <option value="inStock">En stock</option>
+                <option value="outOfStock">Hors stock</option>
+            </select>
+
+            <select id="marqueFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Toutes les marques</option>
+                <!-- Les marques seront injectées ici -->
+            </select>
+
+            <select id="gradeFilter" class="px-4 py-2 border rounded-md w-[180px]">
+                <option value="all">Tous les grades</option>
+                <!-- Les grades seront injectés ici -->
+            </select>
+        </div>
+
+        <!-- Table de données -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="sku">
+                                <div class="flex items-center space-x-1">
+                                    <span>SKU</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Marque">
+                                <div class="flex items-center space-x-1">
+                                    <span>Marque</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Modele">
+                                <div class="flex items-center space-x-1">
+                                    <span>Modèle</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Couleur">
+                                <div class="flex items-center space-x-1">
+                                    <span>Couleur</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Capacite">
+                                <div class="flex items-center space-x-1">
+                                    <span>Capacité</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Grade">
+                                <div class="flex items-center space-x-1">
+                                    <span>Grade</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Quantite">
+                                <div class="flex items-center space-x-1">
+                                    <span>Quantité</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Prix">
+                                <div class="flex items-center space-x-1">
+                                    <span>Prix</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Status">
+                                <div class="flex items-center space-x-1">
+                                    <span>Status</span>
+                                    <span class="sort-icon"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="catalogueTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Les données seront injectées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+               <!-- Pagination -->
+               <div class="mt-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-700">
+                        Afficher
+                        <select id="itemsPerPage" class="mx-1 px-2 py-1 border rounded-md">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        éléments par page
+                    </span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="prevPage" class="px-3 py-1 border rounded-md hover:bg-gray-100 disabled:opacity-50">
+                        Précédent
+                    </button>
+                    <span id="pageInfo" class="text-sm text-gray-700">
+                        Page <span id="currentPage">1</span> sur <span id="totalPages">1</span>
+                    </span>
+                    <button id="nextPage" class="px-3 py-1 border rounded-md hover:bg-gray-100 disabled:opacity-50">
+                        Suivant
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <!-- Fichiers JavaScript -->
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

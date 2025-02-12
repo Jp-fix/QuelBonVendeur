@@ -1,0 +1,29 @@
+FROM nginx:alpine
+
+# Copier les fichiers du projet dans le dossier de nginx
+COPY . /usr/share/nginx/html/
+
+# Créer et copier la configuration nginx personnalisée
+RUN echo 'server { \
+    listen 80; \
+    server_name _; \
+    root /usr/share/nginx/html; \
+    index index.html; \
+    location / { \
+        try_files $uri $uri/ /index.html; \
+    } \
+    # Enable gzip compression \
+    gzip on; \
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript; \
+    # Cache control \
+    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico)$ { \
+        expires 30d; \
+        add_header Cache-Control "public, no-transform"; \
+    } \
+}' > /etc/nginx/conf.d/default.conf
+
+# Exposer le port 80
+EXPOSE 80
+
+# Démarrer nginx
+CMD ["nginx", "-g", "daemon off;"]

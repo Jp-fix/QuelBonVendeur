@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tendances des Prix - QuelBonVendeur</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Remplacer les CDN actuels par ceux-ci -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.3.1/dist/chartjs-adapter-luxon.min.js"></script>
+        <script src="productLifeTimeValue.js"></script>
+        <link rel="stylesheet" href="productLifeTimeValue.css">
+    </head>
+<body class="bg-gray-100">
+    <div class="p-6 space-y-6">
+                <!-- Navigation -->
+                <div class="bg-white shadow rounded-lg">
+                    <div class="p-4 flex items-center justify-between">
+                        <h1 class="text-2xl font-bold"><a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">QuelBonVendeur</h1></a>
+                        <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Accueil
+                        </a>
+                        <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Détail par vendeur
+                        </a>
+                        <a href="productLifeTimeValue.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
+                            Suivi des prix
+                        </a>
+                        <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
+                            <option value="all">Tous les vendeurs</option>
+                            <option value="">Sélectionner un vendeur</option>
+                        </select>
+                    </div>
+                </div>
+        <!-- Filtres -->
+        <div class="bg-white p-4 rounded-lg shadow flex flex-wrap gap-4">
+            <select id="modelFilter" class="px-4 py-2 border rounded-md">
+                <option value="">Tous les modèles</option>
+            </select>
+            <select id="gradeFilter" class="px-4 py-2 border rounded-md">
+                <option value="">Tous les grades</option>
+            </select>
+            <select id="periodFilter" class="px-4 py-2 border rounded-md">
+                <option value="7">7 derniers jours</option>
+                <option value="30">30 derniers jours</option>
+                <option value="90">90 derniers jours</option>
+            </select>
+        </div>
+
+        <!-- Stats rapides -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Prix moyen actuel</div>
+                <div id="avgPrice" class="text-2xl font-bold mt-1">-</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Variation sur la période</div>
+                <div id="priceVariation" class="text-2xl font-bold mt-1">-</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow">
+                <div class="text-sm font-medium text-gray-500">Prix le plus bas observé</div>
+                <div id="lowestPrice" class="text-2xl font-bold mt-1">-</div>
+            </div>
+        </div>
+
+        <!-- Graphique principal -->
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-medium">Évolution des prix</h2>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-sm" data-view="line">Ligne</button>
+                    <button class="px-3 py-1 rounded-md bg-gray-100 hover:bg-gray-200 text-sm" data-view="candlestick">Chandelier</button>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <canvas id="priceChart" width="800" height="400"></canvas>
+            </div>
+        </div>
+
+        <!-- Tableau des variations significatives -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-4 py-3 border-b">
+                <h2 class="text-lg font-medium">Variations significatives</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Produit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Variation</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nouveau prix</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody id="variationsTable" class="bg-white divide-y divide-gray-200">
+                        <!-- Les variations seront injectées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,143 @@
+/* Styles pour les badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-premium {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.badge-standard {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+/* Styles pour les alertes */
+.alert {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.alert-warning {
+    background-color: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #c2410c;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.alert-info {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
+/* Styles pour les graphiques */
+.progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e5e7eb;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.progress-bar-fill-success {
+    background-color: #34d399;
+}
+
+.progress-bar-fill-warning {
+    background-color: #fbbf24;
+}
+
+.progress-bar-fill-danger {
+    background-color: #ef4444;
+}
+
+/* Styles pour les tendances */
+.trend-up {
+    color: #10b981;
+}
+
+.trend-down {
+    color: #ef4444;
+}
+
+.trend-stable {
+    color: #6b7280;
+}
+
+/* Styles pour les tableaux */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+td {
+    padding: 0.75rem 1rem;
+}
+
+tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Styles pour les recommendations */
+.recommendation {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.recommendation-urgent {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.recommendation-warning {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.recommendation-info {
+    background-color: #eff6ff;
+    color: #1e40af;
+}
+
+/* Styles responsifs */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .overflow-x-auto {
+        margin: 0 -1rem;
+        padding: 0 1rem;
+    }
+}
