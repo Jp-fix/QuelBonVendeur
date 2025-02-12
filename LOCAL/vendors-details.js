@@ -5,10 +5,6 @@ const state = {
     allData: [],
     metadata: {}
 };
-
-
-
-
 // Fonctions d'analyse des données
 function getVendorStats(data) {
     const totalProducts = data.length;
@@ -33,14 +29,7 @@ function updateKPIs(stats) {
     document.getElementById('stockRate').textContent = formatPercent(stats.stockRate);
     document.getElementById('inStock').textContent = stats.inStock;
 }
-
-
-
-
-
-
-
-
+/*
 function generateAlerts(vendorData) {
     const alerts = [];
     
@@ -90,8 +79,225 @@ function generateAlerts(vendorData) {
     }
 
     return alerts;
+}*/
+
+function generateAlerts(vendorData) {
+    const alerts = [];
+    
+    // 1. Analyse des ruptures de stock
+    const outOfStock = vendorData.filter(p => p.Quantity === 0);
+    const outOfStockPercentage = (outOfStock.length / vendorData.length) * 100;
+    
+    if (outOfStock.length > 0) {
+        alerts.push({
+            type: outOfStockPercentage > 20 ? 'danger' : 'warning',
+            title: 'Ruptures de stock',
+            message: `${outOfStock.length} produits en rupture de stock (${outOfStockPercentage.toFixed(1)}% du catalogue)`,
+            details: [
+                ...outOfStock.map(p => `${p.Marque} ${p.Modele}`).slice(0, 3),
+                outOfStock.length > 3 ? `et ${outOfStock.length - 3} autres produits...` : null
+            ].filter(Boolean),
+            actions: [
+                'Vérifier les délais de réapprovisionnement',
+                'Contacter les fournisseurs pour les produits prioritaires',
+                'Envisager des alternatives pour les produits les plus demandés'
+            ]
+        });
+    }
+
+    // 2. Analyse des prix et marges
+    const zeroPrice = vendorData.filter(p => p.Prix === 0 && p.Status === 'validated');
+    const lowMargin = vendorData.filter(p => {
+        const margin = p.Prix_reference ? ((p.Prix - p.Prix_reference) / p.Prix_reference) * 100 : null;
+        return margin !== null && margin < 5 && p.Status === 'validated';
+    });
+
+    if (zeroPrice.length > 0 || lowMargin.length > 0) {
+        alerts.push({
+            type: 'danger',
+            title: 'Analyse des prix',
+            message: [
+                zeroPrice.length > 0 ? `${zeroPrice.length} produits ont un prix à 0€` : null,
+                lowMargin.length > 0 ? `${lowMargin.length} produits ont une marge inférieure à 5%` : null
+            ].filter(Boolean).join(' et '),
+            details: [
+                ...zeroPrice.map(p => `Prix nul : ${p.Marque} ${p.Modele}`).slice(0, 2),
+                ...lowMargin.map(p => `Marge faible : ${p.Marque} ${p.Modele}`).slice(0, 2)
+            ],
+            actions: [
+                'Revoir la stratégie de prix pour les produits à marge faible',
+                'Vérifier et corriger les prix à 0€',
+                'Analyser la compétitivité des prix par rapport au marché'
+            ]
+        });
+    }
+    // 3. Analyse de la gamme et des grades
+    const gradeDistribution = vendorData.reduce((acc, p) => {
+        acc[p.Grade] = (acc[p.Grade] || 0) + 1;
+        return acc;
+    }, {});
+
+    const expectedGrades = ['MINT', 'VERY_GOOD', 'GOOD', 'FAIR'];
+    const missingGrades = expectedGrades.filter(g => !gradeDistribution[g]);
+    const unbalancedGrades = Object.entries(gradeDistribution)
+        .some(([_, count]) => (count / vendorData.length) > 0.5);
+
+    if (missingGrades.length > 0 || unbalancedGrades) {
+        alerts.push({
+            type: 'info',
+            title: 'Optimisation de la gamme',
+            message: [
+                missingGrades.length > 0 ? `Grades manquants : ${missingGrades.join(', ')}` : null,
+                unbalancedGrades ? 'Distribution déséquilibrée des grades' : null
+            ].filter(Boolean).join(' - '),
+            details: Object.entries(gradeDistribution)
+                .map(([grade, count]) => `${grade}: ${((count / vendorData.length) * 100).toFixed(1)}%`),
+            actions: [
+                'Diversifier les grades pour couvrir tous les segments de marché',
+                'Équilibrer la distribution des grades pour maximiser les ventes',
+                'Analyser les performances de vente par grade'
+            ]
+        });
+    }
+
+    // 4. Analyse des stocks faibles et critiques
+    const lowStock = vendorData.filter(p => p.Quantity > 0 && p.Quantity < 3);
+    const reorderPoint = Math.max(5, Math.ceil(vendorData.length * 0.05)); // 5% du catalogue ou minimum 5 unités
+    const stockAlert = vendorData.filter(p => p.Quantity > 0 && p.Quantity <= reorderPoint);
+
+    if (lowStock.length > 0 || stockAlert.length > 0) {
+        alerts.push({
+            type: lowStock.length > 0 ? 'warning' : 'info',
+            title: 'Gestion des stocks',
+            message: [
+                lowStock.length > 0 ? `${lowStock.length} produits en stock critique (< 3 unités)` : null,
+                stockAlert.length > 0 ? `${stockAlert.length} produits sous le point de réapprovisionnement` : null
+            ].filter(Boolean).join(' et '),
+            details: [
+                ...lowStock.map(p => `Critique (${p.Quantity}) : ${p.Marque} ${p.Modele}`).slice(0, 2),
+                ...stockAlert
+                    .filter(p => p.Quantity >= 3)
+                    .map(p => `À surveiller (${p.Quantity}) : ${p.Marque} ${p.Modele}`)
+                    .slice(0, 2)
+            ],
+            actions: [
+                'Planifier le réapprovisionnement des produits critiques',
+                'Revoir les seuils de réapprovisionnement',
+                'Mettre en place des alertes automatiques de stock'
+            ]
+        });
+    }
+
+    // 5. Analyse du statut de validation
+    const nonValidated = vendorData.filter(p => p.Status !== 'validated');
+    if (nonValidated.length > 0) {
+        alerts.push({
+            type: 'warning',
+            title: 'Validation des produits',
+            message: `${nonValidated.length} produits non validés`,
+            details: [
+                ...nonValidated.map(p => `${p.Marque} ${p.Modele} (${p.Status})`).slice(0, 3),
+                nonValidated.length > 3 ? `et ${nonValidated.length - 3} autres produits...` : null
+            ].filter(Boolean),
+            actions: [
+                'Compléter les informations manquantes',
+                'Vérifier la conformité des produits',
+                'Valider les fiches produits en attente'
+            ]
+        });
+    }
+
+    // Cas où il n'y a aucune alerte
+    if (alerts.length === 0) {
+        alerts.push({
+            type: 'success',
+            title: 'Catalogue en bonne santé',
+            message: 'Aucune alerte critique à signaler',
+            details: [
+                'Stocks bien gérés',
+                'Prix correctement définis',
+                'Gamme de produits équilibrée'
+            ],
+            actions: [
+                'Continuer la surveillance régulière',
+                'Maintenir les bonnes pratiques actuelles'
+            ]
+        });
+    }
+
+    return alerts;
 }
 
+// Fonction de mise à jour de l'interface pour les alertes
+function updateAlerts(alerts) {
+    const container = document.getElementById('alerts');
+    
+    container.innerHTML = alerts.map(alert => `
+        <div class="alert ${getAlertClass(alert.type)} p-4 rounded-lg mb-4">
+            <div class="flex items-center mb-2">
+                ${getAlertIcon(alert.type)}
+                <h4 class="font-medium ml-2">${alert.title}</h4>
+            </div>
+            <p class="text-sm mb-3">${alert.message}</p>
+            ${alert.details && alert.details.length > 0 ? `
+                <ul class="text-sm mb-3 ml-4 list-disc">
+                    ${alert.details.map(detail => `<li>${detail}</li>`).join('')}
+                </ul>
+            ` : ''}
+            ${alert.actions && alert.actions.length > 0 ? `
+                <div class="mt-3 pt-3 border-t border-gray-200">
+                    <p class="text-sm font-medium mb-2">Actions recommandées :</p>
+                    <ul class="text-sm ml-4 list-circle">
+                        ${alert.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ul>
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
+}
+
+// Fonction utilitaire pour les classes CSS des alertes
+function getAlertClass(type) {
+    switch (type) {
+        case 'danger':
+            return 'bg-red-50 text-red-700 border-l-4 border-red-500';
+        case 'warning':
+            return 'bg-yellow-50 text-yellow-700 border-l-4 border-yellow-500';
+        case 'info':
+            return 'bg-blue-50 text-blue-700 border-l-4 border-blue-500';
+        case 'success':
+            return 'bg-green-50 text-green-700 border-l-4 border-green-500';
+        default:
+            return 'bg-gray-50 text-gray-700 border-l-4 border-gray-500';
+    }
+}
+
+// Fonction utilitaire pour les icônes des alertes
+function getAlertIcon(type) {
+    const baseClass = 'w-5 h-5';
+    switch (type) {
+        case 'danger':
+            return `<svg class="${baseClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>`;
+        case 'warning':
+            return `<svg class="${baseClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>`;
+        case 'info':
+            return `<svg class="${baseClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>`;
+        case 'success':
+            return `<svg class="${baseClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>`;
+        default:
+            return `<svg class="${baseClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>`;
+    }
+}
 // Fonctions utilitaires
 function formatPrice(price) {
     return new Intl.NumberFormat('fr-FR', {
