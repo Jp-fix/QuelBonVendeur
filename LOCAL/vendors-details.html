@@ -15,13 +15,13 @@
                     <div class="p-4 flex items-center justify-between">
                         <h1 class="text-2xl font-bold"><a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">QuelBonVendeur</h1></a>
                         <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Accueil_NEWNEWVERSION
+                            Accueil
                         </a>
                         <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Détail par vendeurNEWVERSION
+                            Détail par vendeur
                         </a>
                         <a href="productLifeTimeValue.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Suivi des prixNEWVERSION
+                            Suivi des prix
                         </a>
                         <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
                             <option value="all">Tous les vendeurs</option>
@@ -32,14 +32,13 @@
         <!-- KPIs du vendeur -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Catalogue Total</div>
+                <div class="text-sm font-medium text-gray-500">Catalogue Vendeur</div>
                 <div id="totalProducts" class="mt-2 text-3xl font-bold">0</div>
                 <div id="totalTrend" class="text-sm text-gray-600 mt-1"></div>
             </div>
             <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Valeur Stock Total</div>
+                <div class="text-sm font-medium text-gray-500">Valeur du catalogue en ligne</div>
                 <div id="stockValue" class="mt-2 text-3xl font-bold">0€</div>
-                <div class="text-sm text-gray-600 mt-1">Prix moyen: <span id="avgPrice">0€</span></div>
             </div>
             <div class="bg-white p-6 rounded-lg shadow">
                 <div class="text-sm font-medium text-gray-500">Taux de disponibilité</div>
@@ -74,50 +73,90 @@
 
             <!-- Analyse des prix -->
             <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-lg font-medium mb-4">Analyse des prix</h3>
-                <div id="priceAnalysis" class="space-y-4">
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Prix le plus bas</div>
-                            <div id="minPrice" class="text-xl font-bold">0€</div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Prix médian</div>
-                            <div id="medianPrice" class="text-xl font-bold">0€</div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Prix le plus élevé</div>
-                            <div id="maxPrice" class="text-xl font-bold">0€</div>
-                        </div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-medium">Analyse des prix</h3>
+                    <div class="text-sm text-gray-500">
+                        Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
                     </div>
-                    <div class="mt-4 grid grid-cols-2 gap-4">
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Marge moyenne</div>
-                            <div id="avgMargin" class="text-xl font-bold">0%</div>
-                            <div class="text-sm text-gray-600">Sur l'ensemble du catalogue</div>
-                        </div>
-                        <div>
-                            <div class="text-sm font-medium text-gray-500">Produits en promotion</div>
-                            <div id="promoCount" class="text-xl font-bold">0</div>
-                            <div class="text-sm text-gray-600">(<span id="promoPercentage">0</span>% du catalogue)</div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="text-sm font-medium text-gray-500 mb-2">Distribution des prix</div>
-                        <div id="priceRangeChart" class="h-48">
-                            <!-- Le graphique sera injecté ici -->
-                        </div>
-                    </div>
-                    <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                        <h4 class="text-sm font-medium text-gray-700 mb-2">Comparaison avec le marché</h4>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-600">Position tarifaire moyenne</span>
-                                <span id="marketPosition" class="font-medium">-</span>
+                </div>
+            
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Statistiques principales -->
+                    <div class="space-y-6">
+                        <!-- KPIs principaux -->
+                        <div class="grid grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="text-center">
+                                <div class="text-sm font-medium text-gray-500">Prix min</div>
+                                <div id="minPrice" class="text-xl font-bold text-green-600">0€</div>
                             </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm text-gray-600">Écart moyen avec la concurrence</span>
-                                <span id="priceGap" class="font-medium">-</span>
+                            <div class="text-center border-x border-gray-200">
+                                <div class="text-sm font-medium text-gray-500">Prix médian</div>
+                                <div id="medianPrice" class="text-xl font-bold text-blue-600">0€</div>
+                                <div class="text-xs text-gray-500">Moyenne: <span id="avgPrice">0€</span></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-medium text-gray-500">Prix max</div>
+                                <div id="maxPrice" class="text-xl font-bold text-red-600">0€</div>
+                            </div>
+                        </div>
+            
+                        <!-- Indicateurs de performance -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <div class="text-sm font-medium text-gray-500">Marge moyenne</div>
+                                <div class="flex items-end gap-2">
+                                    <div id="avgMargin" class="text-2xl font-bold text-blue-600">0%</div>
+                                    <div class="text-sm text-gray-500 mb-1">du catalogue</div>
+                                </div>
+                                <div id="marginTrend" class="text-xs text-gray-500 mt-1">
+                                    <!-- Tendance sera injectée ici -->
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-lg">
+                                <div class="text-sm font-medium text-gray-500">Promotions actives</div>
+                                <div class="flex items-end gap-2">
+                                    <div id="promoCount" class="text-2xl font-bold text-purple-600">0</div>
+                                    <div class="text-sm text-gray-500 mb-1">produits</div>
+                                </div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    (<span id="promoPercentage">0</span>% du catalogue)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Graphique et comparaison marché -->
+                    <div class="space-y-6">
+                        <!-- Distribution des prix -->
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="text-sm font-medium text-gray-700 mb-3">Distribution des prix</div>
+                            <div id="priceRangeChart" class="h-48">
+                                <!-- Le graphique sera injecté ici -->
+                            </div>
+                        </div>
+            
+                        <!-- Comparaison marché -->
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h4 class="text-sm font-medium text-gray-700 mb-3">Position sur le marché</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Position tarifaire</span>
+                                    <div class="flex items-center gap-2">
+                                        <span id="marketPosition" class="font-medium">-</span>
+                                        <span id="positionTrend" class="text-xs">
+                                            <!-- Tendance sera injectée ici -->
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-gray-600">Écart concurrentiel</span>
+                                    <div class="flex items-center gap-2">
+                                        <span id="priceGap" class="font-medium">-</span>
+                                        <span id="gapTrend" class="text-xs">
+                                            <!-- Tendance sera injectée ici -->
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,41 @@ const state = {
     metadata: {}
 };
 
+
+
+
+// Fonctions d'analyse des données
+function getVendorStats(data) {
+    const totalProducts = data.length;
+    const inStock = data.filter(item => item.Quantity > 0).length;
+    const totalValue = data.reduce((acc, item) => acc + (item.Prix * item.Quantity), 0);
+    const avgPrice = totalValue / inStock;
+
+    return {
+        totalProducts,
+        inStock,
+        outOfStock: totalProducts - inStock,
+        stockRate: (inStock / totalProducts) * 100,
+        totalValue,
+        avgPrice
+    };
+}
+// Rendu des données (haut de page)
+function updateKPIs(stats) {
+    document.getElementById('totalProducts').textContent = stats.totalProducts;
+    document.getElementById('stockValue').textContent = formatPrice(stats.totalValue);
+    document.getElementById('avgPrice').textContent = formatPrice(stats.avgPrice);
+    document.getElementById('stockRate').textContent = formatPercent(stats.stockRate);
+    document.getElementById('inStock').textContent = stats.inStock;
+}
+
+
+
+
+
+
+
+
 function generateAlerts(vendorData) {
     const alerts = [];
     
@@ -105,22 +140,7 @@ function calculatePriceRanges(prices) {
     }));
 }
 
-// Fonctions d'analyse des données
-function getVendorStats(data) {
-    const totalProducts = data.length;
-    const inStock = data.filter(item => item.Quantity > 0).length;
-    const totalValue = data.reduce((acc, item) => acc + (item.Prix * item.Quantity), 0);
-    const avgPrice = data.reduce((acc, item) => acc + item.Prix, 0) / totalProducts;
 
-    return {
-        totalProducts,
-        inStock,
-        outOfStock: totalProducts - inStock,
-        stockRate: (inStock / totalProducts) * 100,
-        totalValue,
-        avgPrice
-    };
-}
 
 function getGradeDistribution(data) {
     const distribution = data.reduce((acc, item) => {
@@ -241,13 +261,7 @@ function updateAlerts(alerts) {
     `).join('');
 }
 
-function updateKPIs(stats) {
-    document.getElementById('totalProducts').textContent = stats.totalProducts;
-    document.getElementById('stockValue').textContent = formatPrice(stats.totalValue);
-    document.getElementById('avgPrice').textContent = formatPrice(stats.avgPrice);
-    document.getElementById('stockRate').textContent = formatPercent(stats.stockRate);
-    document.getElementById('inStock').textContent = stats.inStock;
-}
+
 
 function updateGradeDistribution(distribution) {
     const container = document.getElementById('gradeDistribution');
