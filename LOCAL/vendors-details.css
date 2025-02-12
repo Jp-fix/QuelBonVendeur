@@ -141,3 +141,140 @@ tbody tr:hover {
         padding: 0 1rem;
     }
 }
+/* Conteneur principal des statistiques de prix */
+.price-stats-container {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1.5rem;
+}
+
+/* En-tête de la section prix */
+.price-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Grille des indicateurs de prix */
+.price-indicators {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.price-indicator {
+    text-align: center;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.price-indicator:hover {
+    transform: translateY(-2px);
+}
+
+/* Styles pour les valeurs de prix */
+.price-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.price-value.min {
+    color: #059669;
+}
+
+.price-value.max {
+    color: #dc2626;
+}
+
+.price-value.median {
+    color: #2563eb;
+}
+
+/* Graphique de distribution */
+.price-distribution {
+    margin-top: 2rem;
+}
+
+.distribution-bar {
+    background: linear-gradient(90deg, #93c5fd 0%, #3b82f6 100%);
+    height: 0.75rem;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+.distribution-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+/* Indicateurs de performance */
+.performance-indicators {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.performance-card {
+    background-color: #f8fafc;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+}
+
+.performance-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e40af;
+}
+
+/* Indicateurs de tendance */
+.trend-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.trend-up {
+    background-color: #dcfce7;
+    color: #059669;
+}
+
+.trend-down {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.trend-stable {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .price-indicators {
+        grid-template-columns: 1fr;
+    }
+    
+    .performance-indicators {
+        grid-template-columns: 1fr;
+    }
+}

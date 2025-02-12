@@ -497,49 +497,63 @@ function updateBrandAnalysis(brands) {
 }
 
 function updatePriceAnalysis(prices) {
-    // Mise à jour des prix
+    // Mise à jour des indicateurs principaux
     document.getElementById('minPrice').textContent = formatPrice(prices.min || 0);
     document.getElementById('maxPrice').textContent = formatPrice(prices.max || 0);
     document.getElementById('medianPrice').textContent = formatPrice(prices.median || 0);
+    document.getElementById('avgPrice').textContent = formatPrice(prices.avg || 0);
+    
+    // Mise à jour de la marge moyenne
     document.getElementById('avgMargin').textContent = formatPercent(prices.avgMargin || 0);
     
-    // Mise à jour des promotions
-    const promoText = prices.promoCount > 0 
-        ? `${prices.promoCount} (${formatPercent(prices.promoPercentage)})`
-        : "Aucune promotion";
-    document.getElementById('promoCount').textContent = promoText;
+    // Mise à jour de la tendance de la marge
+    const marginTrendElement = document.getElementById('marginTrend');
+    if (prices.marginTrendPercentage) {
+        const trendClass = prices.marginTrendPercentage > 0 ? 'trend-up' : 
+                          prices.marginTrendPercentage < 0 ? 'trend-down' : 'trend-stable';
+        const trendText = prices.marginTrendPercentage > 0 ? `+${formatPercent(prices.marginTrendPercentage)}` :
+                         prices.marginTrendPercentage < 0 ? formatPercent(prices.marginTrendPercentage) : 'stable';
+        marginTrendElement.className = `trend-indicator ${trendClass}`;
+        marginTrendElement.textContent = trendText;
+    }
 
     // Mise à jour de la position sur le marché
     const marketPosition = prices.priceGap > 0 ? 'Premium' : 'Compétitif';
     document.getElementById('marketPosition').textContent = marketPosition;
     
+    // Mise à jour de l'écart de prix
     const priceGapText = Math.abs(prices.priceGap) > 0 
-        ? `${formatPercent(Math.abs(prices.priceGap))} ${prices.priceGap > 0 ? 'au-dessus' : 'en-dessous'} du marché`
-        : 'Dans la moyenne du marché';
+        ? `Écart moyen: ${formatPercent(Math.abs(prices.priceGap))} ${prices.priceGap > 0 ? 'au-dessus' : 'en-dessous'} du marché`
+        : 'Prix alignés sur le marché';
     document.getElementById('priceGap').textContent = priceGapText;
 
     // Mise à jour de la distribution des prix
     const distributionContainer = document.getElementById('priceRangeChart');
     if (prices.distribution && prices.distribution.length > 0) {
         distributionContainer.innerHTML = prices.distribution.map(range => `
-            <div class="mb-2">
-                <div class="flex justify-between text-sm text-gray-600">
+            <div class="mb-4">
+                <div class="distribution-label">
                     <span>${range.range}</span>
-                    <span>${range.count} produits</span>
+                    <span>${range.count} produits (${formatPercent(range.percentage)})</span>
                 </div>
-                <div class="relative pt-1">
-                    <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                        <div 
-                            class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                            style="width: ${range.percentage}%">
-                        </div>
-                    </div>
+                <div class="relative h-3 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="distribution-bar" style="width: ${range.percentage}%"></div>
                 </div>
             </div>
         `).join('');
     } else {
         distributionContainer.innerHTML = '<p class="text-gray-500 text-sm">Aucune donnée disponible pour la distribution des prix</p>';
     }
+
+    // Mise à jour de la dernière mise à jour
+    const now = new Date();
+    document.getElementById('lastUpdate').textContent = now.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
 }
 
 function updateCriticalProducts(products) {
