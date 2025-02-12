@@ -278,3 +278,164 @@ tbody tr:hover {
         grid-template-columns: 1fr;
     }
 }
+/* Styles pour les cartes KPI */
+.kpi-card {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.kpi-card:hover::before {
+    opacity: 1;
+}
+
+.kpi-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.kpi-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.kpi-icon.blue {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.kpi-icon.green {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.kpi-icon.purple {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+}
+
+.kpi-icon.orange {
+    background-color: #ffedd5;
+    color: #c2410c;
+}
+
+.kpi-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+.kpi-trend.up {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.kpi-trend.down {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.kpi-trend.stable {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.kpi-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+/* Styles spécifiques pour la répartition des grades */
+.grade-distribution {
+    margin-top: 1rem;
+}
+
+.grade-bar {
+    background: #f3f4f6;
+    height: 6px;
+    border-radius: 3px;
+    margin-top: 0.25rem;
+    overflow: hidden;
+}
+
+.grade-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.grade-bar-fill.mint {
+    background: linear-gradient(90deg, #818cf8 0%, #6366f1 100%);
+}
+
+.grade-bar-fill.very-good {
+    background: linear-gradient(90deg, #34d399 0%, #10b981 100%);
+}
+
+.grade-bar-fill.good {
+    background: linear-gradient(90deg, #fbbf24 0%, #d97706 100%);
+}
+
+.grade-bar-fill.fair {
+    background: linear-gradient(90deg, #94a3b8 0%, #64748b 100%);
+}
+
+/* Animation pour les valeurs */
+@keyframes countUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.kpi-value {
+    animation: countUp 0.5s ease-out forwards;
+}

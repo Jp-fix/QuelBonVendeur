@@ -1,149 +1,197 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue Détaillé</title>
-    <!-- CDN Scripts -->
+    <title>QuelBonVendeur - Catalogue Détaillé</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Fichier CSS personnalisé -->
     <link rel="stylesheet" href="index.css">
 </head>
-<body class="bg-gray-100">
-    <div class="p-6 space-y-6">
-                <!-- Navigation -->
-                <div class="bg-white shadow rounded-lg">
-                    <div class="p-4 flex items-center justify-between">
-                        <h1 class="text-2xl font-bold"><a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">QuelBonVendeur</h1></a>
-                        <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Accueil
-                        </a>
-                        <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Détail par vendeur
-                        </a>
-                        <a href="productLifeTimeValue.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Suivi des prix
-                        </a>
-                        <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
-                            <option value="all">Tous les vendeurs</option>
-                        </select>
-                    </div>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto p-6 space-y-6">
+        <!-- Navigation -->
+        <div class="nav-container">
+            <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+                <h1 class="text-2xl font-bold">
+                    <a href="index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                        QuelBonVendeur
+                    </a>
+                </h1>
+                
+                <div class="flex items-center gap-6">
+                    <a href="index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                        Accueil
+                    </a>
+                    <a href="vendors-details.html" class="nav-link text-gray-800 hover:text-blue-600">
+                        Détail par vendeur
+                    </a>
                 </div>
-        <!-- En-tête avec sélecteur de vendeur -->
-        <div class="flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Vue d'ensemble</h1>
+
+                <select id="vendorSelect" class="filter-input w-64">
+                    <option value="all">Tous les vendeurs</option>
+                </select>
+            </div>
         </div>
+
+        <!-- En-tête avec titre -->
+        <header class="flex justify-between items-center py-4">
+            <h1 class="text-2xl font-bold text-gray-900">Vue d'ensemble du catalogue</h1>
+            <div class="text-sm text-gray-500">
+                Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
+            </div>
+        </header>
 
         <!-- Statistiques -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">ProductStock</div>
-                <div id="totalProducts" class="mt-2 text-3xl font-bold">0</div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Total des produits -->
+            <div class="stats-card total">
+                <div class="flex items-center justify-between">
+                    <div class="stats-icon total">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                    </div>
+                    <div class="text-sm font-medium text-gray-500">vs. mois dernier</div>
+                </div>
+                <div class="mt-4">
+                    <div class="text-sm font-medium text-gray-500">Produits totaux</div>
+                    <div id="totalProducts" class="mt-2 text-3xl font-bold animate-value">0</div>
+                    <div id="totalTrend" class="mt-2 text-sm"></div>
+                </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">En Stock (Sku > 0)</div>
-                <div id="inStock" class="mt-2 text-3xl font-bold text-green-600">0</div>
+
+            <!-- Produits en stock -->
+            <div class="stats-card in-stock">
+                <div class="flex items-center justify-between">
+                    <div class="stats-icon in-stock">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <div class="text-sm font-medium text-gray-500">Disponibilité</div>
+                </div>
+                <div class="mt-4">
+                    <div class="text-sm font-medium text-gray-500">En Stock</div>
+                    <div id="inStock" class="mt-2 text-3xl font-bold text-green-600 animate-value">0</div>
+                    <div id="stockRate" class="mt-2 text-sm text-gray-600">0% du catalogue</div>
+                </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">ProductStock (Sku > 0 & Stock = 0)</div>
-                <div id="outOfStock" class="mt-2 text-3xl font-bold text-red-600">0</div>
+
+            <!-- Produits en rupture -->
+            <div class="stats-card out-of-stock">
+                <div class="flex items-center justify-between">
+                    <div class="stats-icon out-of-stock">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <div class="text-sm font-medium text-gray-500">Alertes</div>
+                </div>
+                <div class="mt-4">
+                    <div class="text-sm font-medium text-gray-500">Ruptures de stock</div>
+                    <div id="outOfStock" class="mt-2 text-3xl font-bold text-red-600 animate-value">0</div>
+                    <div id="outOfStockRate" class="mt-2 text-sm text-red-600">0% du catalogue</div>
+                </div>
             </div>
         </div>
 
-        <!-- Graphique des stocks -->
-        <div id="stockChart" class="bg-white rounded-lg shadow p-4 mb-6">
-            <h2 class="text-lg font-semibold mb-4">Évolution du catalogue QBP</h2>
+        <!-- Graphique d'évolution -->
+        <div class="stats-card">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-semibold">Évolution du catalogue</h2>
+                <div class="flex items-center gap-4">
+                    <select id="chartPeriod" class="filter-input">
+                        <option value="week">7 derniers jours</option>
+                        <option value="month">30 derniers jours</option>
+                        <option value="quarter">3 derniers mois</option>
+                    </select>
+                </div>
+            </div>
             <div id="stockChartContainer" class="h-64"></div>
         </div>
 
-        
-
-        <!-- Filtres -->
-        <div class="flex flex-wrap gap-4 mb-6">
+        <!-- Filtres et recherche -->
+        <div class="filter-container bg-white p-4 rounded-lg shadow-sm">
             <input 
                 type="text" 
                 id="searchInput"
-                class="px-4 py-2 border rounded-md max-w-sm" 
-                placeholder="Rechercher..."
+                class="filter-input flex-1" 
+                placeholder="Rechercher par modèle, marque ou SKU..."
             >
             
-            <select id="stockStatusFilter" class="px-4 py-2 border rounded-md w-[180px]">
-                <option value="all">Tous les produits</option>
+            <select id="stockStatusFilter" class="filter-input w-44">
+                <option value="all">Tous les stocks</option>
                 <option value="inStock">En stock</option>
-                <option value="outOfStock">Hors stock</option>
+                <option value="outOfStock">Rupture</option>
             </select>
 
-            <select id="marqueFilter" class="px-4 py-2 border rounded-md w-[180px]">
+            <select id="marqueFilter" class="filter-input w-44">
                 <option value="all">Toutes les marques</option>
-                <!-- Les marques seront injectées ici -->
             </select>
 
-            <select id="gradeFilter" class="px-4 py-2 border rounded-md w-[180px]">
+            <select id="gradeFilter" class="filter-input w-44">
                 <option value="all">Tous les grades</option>
-                <!-- Les grades seront injectés ici -->
             </select>
         </div>
 
-        <!-- Table de données -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <!-- Tableau de données -->
+        <div class="table-container">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                    <thead class="table-header">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="sku">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="sku">
                                 <div class="flex items-center space-x-1">
                                     <span>SKU</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Marque">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Marque">
                                 <div class="flex items-center space-x-1">
                                     <span>Marque</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Modele">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Modele">
                                 <div class="flex items-center space-x-1">
                                     <span>Modèle</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Couleur">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Couleur">
                                 <div class="flex items-center space-x-1">
                                     <span>Couleur</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Capacite">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Capacite">
                                 <div class="flex items-center space-x-1">
                                     <span>Capacité</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Grade">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Grade">
                                 <div class="flex items-center space-x-1">
                                     <span>Grade</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Quantite">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Quantity">
                                 <div class="flex items-center space-x-1">
-                                    <span>Quantité</span>
+                                    <span>Stock</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Prix">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Prix">
                                 <div class="flex items-center space-x-1">
                                     <span>Prix</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="Status">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="Status">
                                 <div class="flex items-center space-x-1">
-                                    <span>Status</span>
+                                    <span>Statut</span>
                                     <span class="sort-icon"></span>
                                 </div>
                             </th>
@@ -155,35 +203,42 @@
                 </table>
             </div>
         </div>
-               <!-- Pagination -->
-               <div class="mt-4 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm text-gray-700">
-                        Afficher
-                        <select id="itemsPerPage" class="mx-1 px-2 py-1 border rounded-md">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        éléments par page
-                    </span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button id="prevPage" class="px-3 py-1 border rounded-md hover:bg-gray-100 disabled:opacity-50">
-                        Précédent
-                    </button>
-                    <span id="pageInfo" class="text-sm text-gray-700">
-                        Page <span id="currentPage">1</span> sur <span id="totalPages">1</span>
-                    </span>
-                    <button id="nextPage" class="px-3 py-1 border rounded-md hover:bg-gray-100 disabled:opacity-50">
-                        Suivant
-                    </button>
-                </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-gray-700">
+                    Afficher
+                    <select id="itemsPerPage" class="filter-input mx-1">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    éléments par page
+                </span>
             </div>
+            <div class="flex items-center gap-4">
+                <button id="prevPage" class="pagination-button flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Précédent
+                </button>
+                <span class="text-sm text-gray-700">
+                    Page <span id="currentPage" class="font-medium">1</span> sur <span id="totalPages" class="font-medium">1</span>
+                </span>
+                <button id="nextPage" class="pagination-button flex items-center gap-2">
+                    Suivant
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Fichiers JavaScript -->
+    <!-- Scripts -->
     <script src="data.js"></script>
     <script src="index.js"></script>
 </body>

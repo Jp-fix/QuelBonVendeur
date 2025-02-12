@@ -20,36 +20,68 @@
                         <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
                             Détail par vendeur
                         </a>
-                        <a href="productLifeTimeValue.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Suivi des prix
-                        </a>
                         <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
                             <option value="all">Tous les vendeurs</option>
                             <option value="">Sélectionner un vendeur</option>
                         </select>
                     </div>
                 </div>
-        <!-- KPIs du vendeur -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Catalogue Vendeur</div>
-                <div id="totalProducts" class="mt-2 text-3xl font-bold">0</div>
-                <div id="totalTrend" class="text-sm text-gray-600 mt-1"></div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Valeur du catalogue en ligne</div>
-                <div id="stockValue" class="mt-2 text-3xl font-bold">0€</div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Taux de disponibilité</div>
-                <div id="stockRate" class="mt-2 text-3xl font-bold">0%</div>
-                <div class="text-sm text-gray-600 mt-1">En stock: <span id="inStock">0</span></div>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <div class="text-sm font-medium text-gray-500">Répartition des grades</div>
-                <div id="gradeDistribution" class="mt-2 text-sm space-y-1"></div>
-            </div>
+<!-- KPIs du vendeur -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <!-- Catalogue Vendeur -->
+    <div class="kpi-card">
+        <div class="kpi-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
         </div>
+        <div class="kpi-title">Catalogue Vendeur</div>
+        <div class="kpi-value" id="totalProducts">0</div>
+        <div class="kpi-trend" id="totalTrend">
+            <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 7L18 12M18 12L13 17M18 12H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Stable</span>
+        </div>
+    </div>
+
+    <!-- Valeur du catalogue -->
+    <div class="kpi-card">
+        <div class="kpi-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <div class="kpi-title">Valeur du catalogue</div>
+        <div class="kpi-value" id="stockValue">0€</div>
+        <div class="kpi-subtitle">Valeur totale en ligne</div>
+    </div>
+
+    <!-- Taux de disponibilité -->
+    <div class="kpi-card">
+        <div class="kpi-icon purple">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+        </div>
+        <div class="kpi-title">Taux de disponibilité</div>
+        <div class="kpi-value" id="stockRate">0%</div>
+        <div class="kpi-subtitle">En stock: <span id="inStock">0</span> produits</div>
+    </div>
+
+    <!-- Répartition des grades -->
+    <div class="kpi-card">
+        <div class="kpi-icon orange">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+        </div>
+        <div class="kpi-title">Répartition des grades</div>
+        <div class="grade-distribution" id="gradeDistribution">
+            <!-- Le contenu sera injecté dynamiquement -->
+        </div>
+    </div>
+</div>
 
         <!-- Analyses détaillées -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

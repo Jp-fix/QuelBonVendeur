@@ -22,13 +22,161 @@ function getVendorStats(data) {
     };
 }
 // Rendu des données (haut de page)
+// Mise à jour des KPIs
 function updateKPIs(stats) {
-    document.getElementById('totalProducts').textContent = stats.totalProducts;
-    document.getElementById('stockValue').textContent = formatPrice(stats.totalValue);
-    document.getElementById('avgPrice').textContent = formatPrice(stats.avgPrice);
-    document.getElementById('stockRate').textContent = formatPercent(stats.stockRate);
-    document.getElementById('inStock').textContent = stats.inStock;
+    // Animation des valeurs numériques
+    animateValue('totalProducts', stats.totalProducts);
+    animateValue('stockValue', stats.totalValue, true);
+    animateValue('stockRate', stats.stockRate, false, '%');
+    animateValue('inStock', stats.inStock);
+
+    // Mise à jour de la tendance
+    updateTrendIndicator('totalTrend', stats.totalTrend);
+
+    // Mise à jour de la répartition des grades
+    if (stats.gradeDistribution) {
+        updateGradeDistribution(stats.gradeDistribution);
+    }
 }
+// Fonction d'animation des valeurs numériques
+function animateValue(elementId, value, isCurrency = false, suffix = '') {
+    const element = document.getElementById(elementId);
+    const start = parseInt(element.innerText.replace(/[^0-9.-]+/g, '')) || 0;
+    const duration = 1000; // durée de l'animation en ms
+    const steps = 20; // nombre d'étapes de l'animation
+    const increment = (value - start) / steps;
+    
+    let currentStep = 0;
+    
+    const animation = setInterval(() => {
+        currentStep++;
+        const current = start + (increment * currentStep);
+        
+        if (isCurrency) {
+            element.textContent = formatPrice(current);
+        } else {
+            element.textContent = Math.round(current).toLocaleString() + suffix;
+        }
+        
+        if (currentStep >= steps) {
+            clearInterval(animation);
+            // S'assurer que la valeur finale est exacte
+            if (isCurrency) {
+                element.textContent = formatPrice(value);
+            } else {
+                element.textContent = Math.round(value).toLocaleString() + suffix;
+            }
+        }
+    }, duration / steps);
+}
+
+// Mise à jour de l'indicateur de tendance
+function updateTrendIndicator(elementId, trend) {
+    const element = document.getElementById(elementId);
+    let trendClass, trendIcon, trendText;
+    
+    if (trend > 0) {
+        trendClass = 'up';
+        trendIcon = '<path d="M7 11l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        trendText = `+${trend}% vs. période préc.`;
+    } else if (trend < 0) {
+        trendClass = 'down';
+        trendIcon = '<path d="M7 13l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        trendText = `${trend}% vs. période préc.`;
+    } else {
+        trendClass = 'stable';
+        trendIcon = '<path d="M7 12h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        trendText = 'Stable';
+    }
+    
+    element.className = `kpi-trend ${trendClass}`;
+    element.innerHTML = `
+        <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            ${trendIcon}
+        </svg>
+        <span>${trendText}</span>
+    `;
+}
+
+// Mise à jour de la répartition des grades
+function updateGradeDistribution(distribution) {
+    const container = document.getElementById('gradeDistribution');
+    const totalProducts = distribution.reduce((sum, grade) => sum + grade.count, 0);
+    
+    const gradeColors = {
+        'MINT': 'mint',
+        'VERY_GOOD': 'very-good',
+        'GOOD': 'good',
+        'FAIR': 'fair'
+    };
+
+    container.innerHTML = distribution.map(grade => {
+        const percentage = (grade.count / totalProducts) * 100;
+        return `
+            <div class="mb-2">
+                <div class="flex justify-between items-center text-sm">
+                    <span class="font-medium">${grade.grade}</span>
+                    <span class="text-gray-500">${grade.count} (${percentage.toFixed(1)}%)</span>
+                </div>
+                <div class="grade-bar">
+                    <div class="grade-bar-fill ${gradeColors[grade.grade] || 'fair'}"
+                         style="width: ${percentage}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Fonction utilitaire pour formater les prix
+function formatPrice(price) {
+    return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    }).format(price);
+}
+
+// Fonction de calcul des statistiques du vendeur
+function getVendorStats(data) {
+    const totalProducts = data.length;
+    const inStock = data.filter(item => item.Quantity > 0).length;
+    const totalValue = data.reduce((acc, item) => acc + (item.Prix * item.Quantity), 0);
+    
+    // Calcul de la répartition des grades
+    const gradeDistribution = Object.entries(
+        data.reduce((acc, item) => {
+            acc[item.Grade] = (acc[item.Grade] || 0) + 1;
+            return acc;
+        }, {})
+    ).map(([grade, count]) => ({ grade, count }));
+
+    // Calcul de la tendance (à adapter selon vos besoins)
+    const totalTrend = 0; // À remplacer par le calcul réel de la tendance
+
+    return {
+        totalProducts,
+        inStock,
+        totalValue,
+        stockRate: (inStock / totalProducts) * 100,
+        gradeDistribution,
+        totalTrend
+    };
+}
+
+// Initialisation des animations au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    // Ajout des gestionnaires d'événements pour l'interactivité
+    document.querySelectorAll('.kpi-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-2px)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
+    });
+});
 /*
 function generateAlerts(vendorData) {
     const alerts = [];

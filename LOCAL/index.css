@@ -116,3 +116,213 @@ th[data-sort-direction="desc"] .sort-icon::after {
     border-radius: 0.375rem !important;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
 }
+/* Styles de base */
+:root {
+    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+    --success-gradient: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    --warning-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+/* Header et Navigation */
+.nav-container {
+    background: white;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-gradient);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Cartes de statistiques */
+.stats-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.stats-card.total::before {
+    background: var(--primary-gradient);
+}
+
+.stats-card.in-stock::before {
+    background: var(--success-gradient);
+}
+
+.stats-card.out-of-stock::before {
+    background: var(--danger-gradient);
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card:hover::before {
+    opacity: 1;
+}
+
+.stats-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.stats-icon.total {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.stats-icon.in-stock {
+    background-color: #d1fae5;
+    color: #047857;
+}
+
+.stats-icon.out-of-stock {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Tableau amélioré */
+.table-container {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.table-header {
+    background: #f8fafc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.table-cell {
+    transition: background-color 0.2s ease;
+}
+
+.table-row:hover .table-cell {
+    background-color: #f1f5f9;
+}
+
+/* Filtres et recherche */
+.filter-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.filter-input {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.filter-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+/* Pagination */
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+}
+
+.pagination-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.pagination-button:not(:disabled):hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Animation pour les valeurs */
+@keyframes slideUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-value {
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+/* Styles responsifs */
+@media (max-width: 768px) {
+    .filter-container {
+        flex-direction: column;
+    }
+    
+    .filter-input {
+        width: 100%;
+    }
+    
+    .pagination-container {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+        text-align: center;
+    }
+}
