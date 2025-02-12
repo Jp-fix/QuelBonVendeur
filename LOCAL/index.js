@@ -86,7 +86,7 @@ function updateStats() {
     const outOfStock = total - inStock;
     
     // Calcul des tendances (à adapter selon vos besoins)
-    const previousTotal = total * 0.95; // Exemple: +5% par rapport au mois dernier
+    const previousTotal = total * 0.98; // Exemple: +5% par rapport au mois dernier
     const totalTrend = ((total - previousTotal) / previousTotal) * 100;
     
     // Animation des valeurs
@@ -95,8 +95,8 @@ function updateStats() {
     animateValue('outOfStock', 0, outOfStock);
     
     // Mise à jour des pourcentages
-    document.getElementById('stockRate').textContent = `${formatPercent(inStock/total)} du catalogue`;
-    document.getElementById('outOfStockRate').textContent = `${formatPercent(outOfStock/total)} du catalogue`;
+    document.getElementById('stockRate').textContent = `${formatPercent(inStock/total * 100 )} du catalogue`;
+    document.getElementById('outOfStockRate').textContent = `${formatPercent(outOfStock/total * 100)} du catalogue`;
     
     // Mise à jour des tendances
     updateTrendIndicator('totalTrend', totalTrend);

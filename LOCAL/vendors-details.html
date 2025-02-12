@@ -11,21 +11,28 @@
 <body class="bg-gray-100">
     <div class="p-6 space-y-6">
                 <!-- Navigation -->
-                <div class="bg-white shadow rounded-lg">
-                    <div class="p-4 flex items-center justify-between">
-                        <h1 class="text-2xl font-bold"><a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">QuelBonVendeur</h1></a>
-                        <a href="index.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Accueil
-                        </a>
-                        <a href="vendors-details.html" class="text-gray-800 font-semibold hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600">
-                            Détail par vendeur
-                        </a>
-                        <select id="vendorSelect" class="px-4 py-2 border rounded-md w-64">
-                            <option value="all">Tous les vendeurs</option>
-                            <option value="">Sélectionner un vendeur</option>
-                        </select>
-                    </div>
-                </div>
+<div class="nav-container">
+    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+        <h1 class="text-2xl font-bold">
+            <a href="index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                QuelBonVendeur
+            </a>
+        </h1>
+        
+        <div class="flex items-center gap-6">
+            <a href="index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Accueil
+            </a>
+            <a href="vendors-details.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Détail par vendeur
+            </a>
+        </div>
+
+        <select id="vendorSelect" class="filter-input w-64">
+            <option value="">Sélectionner un vendeur</option>
+        </select>
+    </div>
+</div>
 <!-- KPIs du vendeur -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
     <!-- Catalogue Vendeur -->
