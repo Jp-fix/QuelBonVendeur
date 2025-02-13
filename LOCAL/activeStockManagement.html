@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuelBonVendeur - Gestion des Stocks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="activeStockManagement.css">
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-6">
+<!-- Navigation -->
+<div class="nav-container">
+    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+        <h1 class="text-2xl font-bold">
+            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
+                QuelBonVendeur
+            </a>
+        </h1>
+        <div class="flex items-center gap-6">
+            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Catalogue
+            </a>
+            <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Gestion du catalogue
+            </a>
+            <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Profil Vendeur
+            </a>
+            <a href="classement-vendeurs.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Analytics
+            </a>
+        </div>
+
+        <select id="vendorSelect" class="filter-input w-64">
+            <option value="all">Tous les vendeurs</option>
+        </select>
+    </div>
+</div>
+
+<!-- En-tête avec titre -->
+<header class="flex justify-between items-center py-4">
+    <h1 class="text-2xl font-bold text-gray-900">Vue d'ensemble</h1>
+    <div class="text-sm text-gray-500">
+        Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
+    </div>
+</header>
+
+        <!-- KPI Rows -->
+        <div class="space-y-6">
+            <!-- First KPI Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Couverture du Marché -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">Couverture du Marché</div>
+                            <div class="text-2xl font-bold mt-1">85%</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
+                            +8%
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">ModelID créés vs estimés</span>
+                            <span>2,450 / 2,880</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-4/5 bg-green-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ModelID Utilisés -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">ModelID Utilisés</div>
+                            <div class="text-2xl font-bold mt-1">72%</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                            1,764 actifs
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">Utilisés vs Créés</span>
+                            <span>1,764 / 2,450</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ModelID en Attente -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">ModelID en Attente</div>
+                            <div class="text-2xl font-bold mt-1">28%</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                            686 à activer
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">Sans SKU</span>
+                            <span>686 / 2,450</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-3/12 bg-yellow-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second KPI Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- SKUs Matchés -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">SKUs Matchés</div>
+                            <div class="text-2xl font-bold mt-1">3,245</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                            +15%
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">vs SKUs Partenaires</span>
+                            <span>3,245 / 4,500</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evolution Partenaires -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">Evolution Partenaires</div>
+                            <div class="text-2xl font-bold mt-1">+8.5%</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
+                            Cette semaine
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">Progression</span>
+                            <span>+275 SKUs</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-10/12 bg-green-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ModelIDs avec SKU Actif -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">ModelIDs avec SKU Actif</div>
+                            <div class="text-2xl font-bold mt-1">1,890</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-purple-100 text-purple-800 rounded">
+                            77%
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">Couverture</span>
+                            <span>1,890 / 2,450</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-9/12 bg-purple-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SKUs Manquants -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-sm text-gray-500">SKUs Manquants</div>
+                            <div class="text-2xl font-bold mt-1">215</div>
+                        </div>
+                        <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                            À matcher
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-500">Détectés ailleurs</span>
+                            <span>215 produits</span>
+                        </div>
+                        <div class="h-2 bg-gray-100 rounded-full">
+                            <div class="h-full w-3/12 bg-yellow-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evolution Chart -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg font-semibold">Évolution des Stocks</h2>
+                <select class="bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <option>30 derniers jours</option>
+                    <option>90 derniers jours</option>
+                    <option>12 derniers mois</option>
+                </select>
+            </div>
+            <div class="h-96 bg-gray-50 rounded-lg">
+                <img src="/api/placeholder/800/400" alt="Graphique d'évolution des stocks" class="w-full h-full object-cover rounded-lg"/>
+            </div>
+        </div>
+
+        <!-- Market Analysis and Matching -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Analyse Concurrentielle -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Analyse Concurrentielle
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="text-left text-sm text-gray-500">
+                                <th class="pb-3">Site</th>
+                                <th class="pb-3">SKUs Détectés</th>
+                                <th class="pb-3">Couverture</th>
+                                <th class="pb-3">Évolution</th>
+                                <th class="pb-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-t">
+                                <td class="py-3">Concurrent A</td>
+                                <td>215</td>
+                                <td>92%</td>
+                                <td>
+                                    <span class="text-green-600">+5%</span>
+                                </td>
+                                <td>
+                                    <button class="text-blue-600 hover:text-blue-700">Analyser</button>
+                                </td>
+                            </tr>
+                            <tr class="border-t">
+                                <td class="py-3">Concurrent B</td>
+                                <td>180</td>
+                                <td>85%</td>
+                                <td>
+                                    <span class="text-red-600">-2%</span>
+                                </td>
+                                <td>
+                                    <button class="text-blue-600 hover:text-blue-700">Analyser</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Matching Suggestions -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                    Suggestions de Matching
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div>
+                            <div class="font-medium">SKU-12345 → MOD-789</div>
+                            <div class="text-sm text-gray-500">PhoneMarket</div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-sm text-green-600 font-medium">95%</span>
+                            <button class="text-blue-600 hover:text-blue-700">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-lg shadow p-4 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <input 
+                    type="text" 
+                    class="p-2 border rounded-lg" 
+                    placeholder="Rechercher par modèle, marque ou SKU..."
+                />
+                <select class="p-2 border rounded-lg">
+                    <option value="all">Tous les stocks</option>
+                    <option value="inStock">En stock</option>
+                    <option value="outOfStock">Rupture</option>
+                </select>
+                <select class="p-2 border rounded-lg">
+                    <option value="all">Toutes les marques</option>
+                </select>
+                <select class="p-2 border rounded-lg">
+                    <option value="all">Tous les grades</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- SKUs Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <!-- Table Header -->
+            <div class="p-6 flex items-center justify-between border-b border-gray-200">
+                <h2 class="text-lg font-semibold flex items-center gap-2">
+                    <svg class="w-5 h-5 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    SKUs à Matcher en Priorité
+                </h2>
+                <button class="flex items-center gap-2 text-blue-600 hover:text-blue-700">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Actualiser
+                </button>
+            </div>
+
+            <!-- Table Content -->
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendeur</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confiance</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">SKU-001</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">iPhone 14 Pro Max - 1TB</div>
+                                <div class="text-sm text-gray-500">Noir Sidéral</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">PhoneMarket</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-green-600 font-medium">95%</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    Urgent
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <button class="text-blue-600 hover:text-blue-700">Matcher</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">SKU-002</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900">Samsung S23 Ultra - 512GB</div>
+                                <div class="text-sm text-gray-500">Phantom Black</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TechRecycle</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-green-600 font-medium">87%</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    À vérifier
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <button class="text-blue-600 hover:text-blue-700">Matcher</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Précédent
+                    </button>
+                    <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        Suivant
+                    </button>
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Affichage de <span class="font-medium">1</span> à <span class="font-medium">10</span> sur <span class="font-medium">45</span> résultats
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Précédent</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                1
+                            </button>
+                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                2
+                            </button>
+                            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                3
+                            </button>
+                            <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                <span class="sr-only">Suivant</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="activeStockManagement.js"></script>
+</body>
+</html>
