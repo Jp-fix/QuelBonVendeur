@@ -37,6 +37,16 @@ const state = {
         stockStatus: 'all',
         brand: 'all',
         grade: 'all'
+    },
+    skuChurn: {
+        count: 187,           // 187 SKUs perdus
+        percentage: 7.6,      // 7.6% de taux de churn
+        trend: -2.3          // Amélioration de 2.3% par rapport à la période précédente
+    },
+    unmatchedSkus: {
+        count: 432,          // 432 SKUs matchés sans stock
+        percentage: 13.3,    // 13.3% des SKUs matchés
+        total: 3245         // Sur un total de 3245 SKUs matchés (cohérent avec state.data.skus.matched)
     }
 };
 
@@ -123,6 +133,20 @@ function updateKPIs() {
     animateValue('missingSkus', 0, state.data.missingSkus.count);
     updateElement('missingSkusLabel', state.data.missingSkus.label);
     updateElement('missingSkusCount', `${formatNumber(state.data.missingSkus.count)} produits`);
+
+    // Mise à jour du taux de churn
+    animateValue('skuChurnRate', 0, state.data.skuChurn.percentage);
+    updateElement('skuChurnCount', `${formatNumber(state.data.skuChurn.count)} SKUs`);
+    updateElement('skuChurnTrend', 
+        `${state.data.skuChurn.trend >= 0 ? '+' : ''}${state.data.skuChurn.trend}%`
+    );
+    
+    // Mise à jour des SKUs matchés sans stock
+    animateValue('unmatchedSkus', 0, state.data.unmatchedSkus.count);
+    updateElement('unmatchedSkusRatio', 
+        `${formatNumber(state.data.unmatchedSkus.count)} / ${formatNumber(state.data.unmatchedSkus.total)}`
+    );
+
 }
 
 // Fonction utilitaire pour mettre à jour un élément
@@ -143,7 +167,9 @@ function updateProgressBars() {
         'matchedSkusBar': (state.data.skus.matched / state.data.skus.totalPartner) * 100,
         'evolutionBar': 80, // Valeur fixe pour l'exemple
         'activeModelIdsBar': (state.data.activeModelIds.count / state.data.activeModelIds.total) * 100,
-        'missingSkusBar': 25 // Valeur fixe pour l'exemple
+        'missingSkusBar': 25, // Valeur fixe pour l'exemple
+        'skuChurnBar': state.data.skuChurn.percentage,
+        'unmatchedSkusBar': (state.data.unmatchedSkus.count / state.data.unmatchedSkus.total) * 100
     };
 
     // Mise à jour des barres de progression

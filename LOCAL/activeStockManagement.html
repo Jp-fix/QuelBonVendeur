@@ -13,21 +13,15 @@
 <div class="nav-container">
     <div class="p-4 flex items-center justify-between flex-wrap gap-4">
         <h1 class="text-2xl font-bold">
-            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
+            <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
                 QuelBonVendeur
             </a>
         </h1>
         <div class="flex items-center gap-6">
-            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Catalogue
-            </a>
-            <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Gestion du catalogue
-            </a>
             <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
                 Profil Vendeur
             </a>
-            <a href="classement-vendeurs.html" class="nav-link text-gray-800 hover:text-blue-600">
+            <a href="market-coverage.html" class="nav-link text-gray-800 hover:text-blue-600">
                 Analytics
             </a>
         </div>
@@ -208,6 +202,50 @@
                 </div>
             </div>
         </div>
+
+        <!-- Taux de churn SKU -->
+<div class="bg-white rounded-lg shadow-sm p-6">
+    <div class="flex justify-between items-start mb-4">
+        <div>
+            <div class="text-sm text-gray-500">Taux de churn SKU</div>
+            <div class="text-2xl font-bold mt-1" id="skuChurnRate">0%</div>
+        </div>
+        <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
+            <span id="skuChurnCount">0</span> SKUs perdus
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="flex justify-between text-sm mb-2">
+            <span class="text-gray-500">Évolution</span>
+            <span id="skuChurnTrend">0%</span>
+        </div>
+        <div class="h-2 bg-gray-100 rounded-full">
+            <div class="h-full bg-red-500 rounded-full" id="skuChurnBar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
+<!-- SKUs matchés sans stock -->
+<div class="bg-white rounded-lg shadow-sm p-6">
+    <div class="flex justify-between items-start mb-4">
+        <div>
+            <div class="text-sm text-gray-500">SKUs matchés sans stock</div>
+            <div class="text-2xl font-bold mt-1" id="unmatchedSkus">0</div>
+        </div>
+        <div class="text-sm px-2 py-1 bg-orange-100 text-orange-800 rounded">
+            À approvisionner
+        </div>
+    </div>
+    <div class="mt-4">
+        <div class="flex justify-between text-sm mb-2">
+            <span class="text-gray-500">Du total matchés</span>
+            <span id="unmatchedSkusRatio">0 / 0</span>
+        </div>
+        <div class="h-2 bg-gray-100 rounded-full">
+            <div class="h-full bg-orange-500 rounded-full" id="unmatchedSkusBar" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
 
         <!-- Evolution Chart -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
