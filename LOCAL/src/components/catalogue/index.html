@@ -6,30 +6,36 @@
     <title>QuelBonVendeur - Catalogue Détaillé</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="catalogue.css">
+    <link rel="stylesheet" href="/src/assets/css/catalogue.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto p-6 space-y-6">
-        <!-- Navigation -->
-        <div class="nav-container">
-            <div class="p-4 flex items-center justify-between flex-wrap gap-4">
-                <h1 class="text-2xl font-bold">
-                    <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Détails | Vendeurs
-                    </a>
-                    <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Analytics | Catalogue
-                    </a>
-                    <a href="market-coverage.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Analytics | Couverture du marché
-                    </a>
-                </div>
 
-                <select id="vendorSelect" class="filter-input w-64">
-                    <option value="all">Tous les vendeurs</option>
-                </select>
-            </div>
+        <!-- Navigation -->
+<div class="nav-container">
+    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+        <h1 class="text-2xl font-bold">
+            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                QuelBonVendeur
+            </a>
+        </h1>
+        <div class="flex items-center gap-6">
+            <a href="/src/components/catalogue/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Catalogue
+            </a>
+            <a href="/src/components/marketCoverage/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Couverture du marché
+            </a>
+            <select id="vendorSelect" class="filter-input w-64">
+                <option value="all">Tous les vendeurs</option>
+            </select>
         </div>
+<p></p>
+<!--         <select id="vendorSelect" class="filter-input w-64">
+            <option value="">Sélectionner un vendeur</option>
+        </select> -->
+    </div>
+</div>
 
         <!-- En-tête avec titre -->
         <header class="flex justify-between items-center py-4">
@@ -49,7 +55,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                         </svg>
                     </div>
-                    <div class="text-sm font-medium text-gray-500">vs. mois dernier</div>
+                    <div class="text-sm font-medium text-gray-500">Suivi</div>
                 </div>
                 <div class="mt-4">
                     <div class="text-sm font-medium text-gray-500">Produits totaux</div>
@@ -236,7 +242,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="data.js"></script>
-    <script src="catalogue.js"></script>
+    <script src="/src/components/catalogue/index.js"></script>
+    <script src="/src/data/data.js"></script>
 </body>
 </html>

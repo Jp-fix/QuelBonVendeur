@@ -1,21 +1,44 @@
 FROM nginx:alpine
 
-# Copier les fichiers du projet dans le dossier de nginx
-COPY . /usr/share/nginx/html/
+# Créer le répertoire de l'application
+WORKDIR /app
+
+# Copier les fichiers du projet dans le dossier de l'application
+COPY src/ /usr/share/nginx/html/
 
 # Créer et copier la configuration nginx personnalisée
 RUN echo 'server { \
     listen 80; \
     server_name _; \
     root /usr/share/nginx/html; \
-    index index.html; \
+    index components/stockManagement/index.html; \
+    
+    # Routes pour les différents composants
     location / { \
-        try_files $uri $uri/ /index.html; \
+        try_files $uri $uri/ /components/stockManagement/index.html; \
     } \
-    # Enable gzip compression \
+    
+    location /catalogue { \
+        try_files $uri $uri/ /components/catalogue/index.html; \
+    } \
+    
+    location /vendor-ranking { \
+        try_files $uri $uri/ /components/vendorRanking/index.html; \
+    } \
+    
+    location /vendor-details { \
+        try_files $uri $uri/ /components/vendorDetails/index.html; \
+    } \
+    
+    location /market-coverage { \
+        try_files $uri $uri/ /components/marketCoverage/index.html; \
+    } \
+    
+    # Enable gzip compression
     gzip on; \
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript; \
-    # Cache control \
+    
+    # Cache control for static assets
     location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico)$ { \
         expires 30d; \
         add_header Cache-Control "public, no-transform"; \

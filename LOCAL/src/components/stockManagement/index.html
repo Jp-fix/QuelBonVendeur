@@ -5,77 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuelBonVendeur - Gestion des Stocks</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="activeStockManagement.css">
+    <link rel="stylesheet" href="/src/assets/css/activeStockManagement.css">
 </head>
 <body class="bg-gray-50">
     <div class="min-h-screen p-6">
+        
 <!-- Navigation -->
 <div class="nav-container">
     <div class="p-4 flex items-center justify-between flex-wrap gap-4">
         <h1 class="text-2xl font-bold">
-            <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
+            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
                 QuelBonVendeur
             </a>
         </h1>
         <div class="flex items-center gap-6">
-            <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Détails | Vendeurs
+            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Vendeurs
             </a>
-            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Analytics | Catalogue
-            </a>
-            <a href="market-coverage.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Analytics | Couverture du marché
+            <a href="/src/components/catalogue/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Catalogue
             </a>
         </div>
-        <p></p>
+<p></p>
 <!--         <select id="vendorSelect" class="filter-input w-64">
-            <option value="all">Tous les vendeurs</option>
+            <option value="">Sélectionner un vendeur</option>
         </select> -->
     </div>
 </div>
 
 <!-- En-tête avec titre -->
 <header class="flex justify-between items-center py-4">
-    <h1 class="text-2xl font-bold text-gray-900">Vue d'ensemble</h1>
+    <h1 class="text-2xl font-bold text-gray-900 h1B009">Vue d'ensemble</h1>
 <!--     <div class="text-sm text-gray-500">
         Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
     </div> -->
-</header><!-- Stats Dashboard -->
+</header>
+
+<!-- Stats Dashboard -->
 <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
     <div class="mb-4">
         <h2 class="text-lg font-semibold text-gray-900">Tableau de bord</h2>
         <p class="text-sm text-gray-500">Vue d'ensemble des indicateurs clés</p>
     </div>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <!-- Couverture du Marché -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+<!-- Couverture du Marché -->
+<div class="bg-gray-50 rounded-lg p-4">
+    <div class="flex justify-between items-start mb-4">
+        <div>
+            <div class="text-sm text-gray-500">Couverture du Marché</div>
+            <div class="text-2xl font-bold mt-1">85%</div>
+        </div>
+        <div class="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
+            +8%
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="flex justify-between text-sm mb-2">
+            <span class="text-gray-500">Offre QBP vs Marché</span>
+            <span>2,450 / 2,880</span>
+        </div>
+        <div class="h-2 bg-white rounded-full">
+            <div class="h-full w-4/5 bg-green-500 rounded-full"></div>
+        </div>
+    </div>
+</div>
+
+        <!-- ProductStock -->
         <div class="bg-gray-50 rounded-lg p-4">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <div class="text-sm text-gray-500">Couverture du Marché</div>
-                    <div class="text-2xl font-bold mt-1">85%</div>
+                    <div class="text-sm text-gray-500">ProductStock</div>
+                    <div class="text-2xl font-bold mt-1">3,245</div>
                 </div>
-                <div class="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
-                    +8%
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +15%
                 </div>
             </div>
             <div class="mt-2">
                 <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">ModelID créés vs estimés</span>
-                    <span>2,450 / 2,880</span>
+                    <span class="text-gray-500">SKU matché > 0</span>
+                    <span>3,245 / 4,500</span>
                 </div>
                 <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-4/5 bg-green-500 rounded-full"></div>
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
                 </div>
             </div>
         </div>
 
-        <!-- ModelID Utilisés -->
+        <!-- Model ID Actifs -->
         <div class="bg-gray-50 rounded-lg p-4">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <div class="text-sm text-gray-500">ModelID Utilisés</div>
+                    <div class="text-sm text-gray-500">Model ID Actifs</div>
                     <div class="text-2xl font-bold mt-1">72%</div>
                 </div>
                 <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
@@ -84,33 +106,11 @@
             </div>
             <div class="mt-2">
                 <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">Utilisés vs Créés</span>
+                    <span class="text-gray-500">SKU > 0 & Stock > 0</span>
                     <span>1,764 / 2,450</span>
                 </div>
                 <div class="h-2 bg-white rounded-full">
                     <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ModelID en Attente -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">ModelID en Attente</div>
-                    <div class="text-2xl font-bold mt-1">28%</div>
-                </div>
-                <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
-                    686 à activer
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">Sans SKU</span>
-                    <span>686 / 2,450</span>
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-[28%] bg-yellow-500 rounded-full"></div>
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
             <div class="flex justify-between items-start mb-4">
                 <div>
                     <div class="text-sm text-gray-500">SKUs Matchés</div>
-                    <div class="text-2xl font-bold mt-1">3,245</div>
+                    <div class="text-2xl font-bold mt-1">72%</div>
                 </div>
                 <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
                     +15%
@@ -128,7 +128,7 @@
             </div>
             <div class="mt-2">
                 <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">vs SKUs Partenaires</span>
+                    <span class="text-gray-500"></span>
                     <span>3,245 / 4,500</span>
                 </div>
                 <div class="h-2 bg-white rounded-full">
@@ -136,7 +136,15 @@
                 </div>
             </div>
         </div>
-
+    </div>
+</div>
+<!-- Monitoring Dashboard -->
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">Monitoring et Alertes</h2>
+        <p class="text-sm text-gray-500">Suivi des indicateurs de performances</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <!-- Evolution Partenaires -->
         <div class="bg-gray-50 rounded-lg p-4">
             <div class="flex justify-between items-start mb-4">
@@ -159,24 +167,24 @@
             </div>
         </div>
 
-        <!-- ModelIDs avec SKU Actif -->
+        <!-- Model ID en Attente -->
         <div class="bg-gray-50 rounded-lg p-4">
             <div class="flex justify-between items-start mb-4">
                 <div>
-                    <div class="text-sm text-gray-500">ModelIDs avec SKU Actif</div>
-                    <div class="text-2xl font-bold mt-1">1,890</div>
+                    <div class="text-sm text-gray-500">Model ID en Attente</div>
+                    <div class="text-2xl font-bold mt-1">28%</div>
                 </div>
-                <div class="text-sm px-2 py-1 bg-purple-100 text-purple-800 rounded">
-                    77%
+                <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                    686 à activer
                 </div>
             </div>
             <div class="mt-2">
                 <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">Couverture</span>
-                    <span>1,890 / 2,450</span>
+                    <span class="text-gray-500">Sans SKU</span>
+                    <span>686 / 2,450</span>
                 </div>
                 <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-9/12 bg-purple-500 rounded-full"></div>
+                    <div class="h-full w-[28%] bg-yellow-500 rounded-full"></div>
                 </div>
             </div>
         </div>
@@ -199,59 +207,6 @@
                 </div>
                 <div class="h-2 bg-white rounded-full">
                     <div class="h-full w-3/12 bg-yellow-500 rounded-full"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Monitoring Dashboard -->
-<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-    <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Monitoring et Alertes</h2>
-        <p class="text-sm text-gray-500">Suivi des indicateurs critiques</p>
-    </div>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Taux de churn SKU -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Taux de churn SKU</div>
-                    <div class="text-2xl font-bold mt-1">4.2%</div>
-                </div>
-                <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                    127 SKUs perdus
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">Évolution</span>
-                    <span class="text-green-600">-0.8%</span>
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-[4.2%] bg-red-500 rounded-full"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Prévisions Ruptures -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Prévisions Ruptures</div>
-                    <div class="text-2xl font-bold mt-1">85</div>
-                </div>
-                <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
-                    À 30 jours
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                    <span class="text-gray-500">Modèles à risque</span>
-                    <span>15 produits</span>
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-[18.9%] bg-yellow-500 rounded-full"></div>
                 </div>
             </div>
         </div>
@@ -279,6 +234,9 @@
         </div>
     </div>
 </div>
+
+<div class="bg-white rounded-xl">
+
         <!-- Evolution Chart -->
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="flex justify-between items-center mb-6">
@@ -511,7 +469,7 @@
             </div>
         </div>
     </div>
-
-    <script src="activeStockManagement.js"></script>
+</div>
+    <script src="/src/components/stockManagement/index.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <title>Détails Vendeur - QuelBonVendeur</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="details-vendeur.css">
+    <link rel="stylesheet" href="/src/assets/css/vendorDetails.css">
 </head>
 <body class="bg-gray-100">
     <div class="p-6 space-y-6">
@@ -14,20 +14,17 @@
 <div class="nav-container">
     <div class="p-4 flex items-center justify-between flex-wrap gap-4">
         <h1 class="text-2xl font-bold">
-            <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
+            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
                 QuelBonVendeur
             </a>
         </h1>
         
         <div class="flex items-center gap-6">
-            <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Détails | Vendeurs
+            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Détail Vendeurs
             </a>
-            <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Analytics | Catalogue
-            </a>
-            <a href="market-coverage.html" class="nav-link text-gray-800 hover:text-blue-600">
-                Analytics | Couverture du marché
+            <a href="/src/components/vendorRanking/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Classement vendeurs
             </a>
         </div>
 
@@ -242,7 +239,7 @@
             </div>
         </div>
     </div>
-    <script src="details-vendeur.js"></script>
-    <script src="data.js"></script>
+    <script src="/src/components/vendorDetails/index.js"></script>
+    <script src="/src/data/data.js"></script>
 </body>
 </html>

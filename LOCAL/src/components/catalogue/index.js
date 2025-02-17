@@ -14,7 +14,7 @@ const state = {
     chartData: {
         period: 'month',
         data: []
-    },
+    }, 
     pagination: {
         currentPage: 1,
         itemsPerPage: 25,

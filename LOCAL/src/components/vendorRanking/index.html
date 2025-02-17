@@ -6,37 +6,33 @@
     <title>QuelBonVendeur - Vue d'ensemble</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="classement-vendeurs.css">
+    <link rel="stylesheet" href="/src/assets/css/classement-vendeurs.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-full mx-auto p-4 space-y-4">
-        <!-- Navigation -->
-        <div class="nav-container">
-            <div class="p-4 flex items-center justify-between flex-wrap gap-4">
-                <h1 class="text-2xl font-bold">
-                    <a href="activeStockManagement.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        QuelBonVendeur
-                    </a>
-                </h1>
+                <!-- Navigation -->
+                <div class="nav-container">
+                    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+                        <h1 class="text-2xl font-bold">
+                            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                                QuelBonVendeur
+                            </a>
+                        </h1>
+                        
+                        <div class="flex items-center gap-6">
+                            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                                Détail Vendeurs
+                            </a>
+                            <a href="/src/components/vendorRanking/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                                Classement vendeurs
+                            </a>
+                        </div>
                 
-                <div class="flex items-center gap-6">
-                    <a href="details-vendeur.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Détails | Vendeurs
-                    </a>
-                    <a href="catalogue.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Analytics | Catalogue
-                    </a>
-                    <a href="market-coverage.html" class="nav-link text-gray-800 hover:text-blue-600">
-                        Analytics | Couverture du marché
-                    </a>
+                        <select id="vendorSelect" class="filter-input w-64">
+                            <option value="">Sélectionner un vendeur</option>
+                        </select>
+                    </div>
                 </div>
-                <select id="vendorSelect" class="filter-input w-64">
-                    <option value="all"> --</option>
-                </select>
-            </div>
-        </div>
-        
-
         <!-- Filtres et KPIs en ligne -->
         <div class="grid grid-cols-1 lg:grid-cols-6 gap-4">
             <!-- Filtres -->
@@ -148,7 +144,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="data.js"></script>
-    <script src="classement-vendeurs.js"></script>
+    <script src="/src/data/data.js"></script>
+    <script src="/src/components/vendorRanking/index.js"></script>
 </body>
 </html>
