@@ -19,7 +19,6 @@ const state = {
         totalPages: 1
     }
 };
-
 // Formatage des prix
 function formatPrice(price) {
     return new Intl.NumberFormat('fr-FR', {

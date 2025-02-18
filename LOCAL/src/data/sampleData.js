@@ -1,0 +1,383 @@
+export const APP_DATA = {
+  metadata: {
+    lastUpdate: "2024-03-20T10:30:00.000Z",
+    vendors: ["2GiC", "ATOUTEK", "AVEGOTT", "DRJL", "BACKMARKET"],
+    grades: ["MINT", "VERY_GOOD", "GOOD", "FAIR"],
+    marques: ["Apple", "Samsung", "Xiaomi", "Google"],
+    capacites: [16, 32, 64, 128, 256, 512, 1024],
+    couleurs: [
+      "Noir", "Gris Sidéral", "Bleu", "Or", "Argent", "Rouge", 
+      "Violet", "Vert", "Blanc", "Rose", "Crème", "Titane Naturel",
+      "Titane Bleu", "Titane Noir", "Bleu Alpin", "Porcelaine"
+    ],
+    stats: {
+      totalProducts: 25,
+      inStock: 21,
+      outOfStock: 4,
+      avgPrice: 669,
+      totalValue: 234150
+    },
+    historicalData: [
+      {
+        date: "2024-02-20",
+        totalProducts: 20,
+        inStock: 17,
+        avgPrice: 649
+      },
+      {
+        date: "2024-03-01",
+        totalProducts: 22,
+        inStock: 19,
+        avgPrice: 659
+      },
+      {
+        date: "2024-03-20",
+        totalProducts: 25,
+        inStock: 21,
+        avgPrice: 669
+      }
+    ],
+    marketCoverage: {
+      total: 2450,
+      target: 2880,
+      percentage: 85
+    },
+    productStock: {
+      matched: 3245,
+      total: 4500,
+      percentage: 72
+    },
+    modelIds: {
+      active: 1764,
+      total: 2450,
+      percentage: 72
+    }
+  },
+  products: [
+    {
+      sku: "APL-IP15PM-512-MINT-TIT",
+      Marque: "Apple",
+      Modele: "iPhone 15 Pro Max",
+      Couleur: "Titane Naturel",
+      Capacite: 512,
+      Grade: "MINT",
+      Prix: 1299,
+      Prix_reference: 1479,
+      Quantity: 5,
+      "Nom vendeur": "2GiC",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP15P-256-VGOOD-BLUE",
+      Marque: "Apple",
+      Modele: "iPhone 15 Pro",
+      Couleur: "Titane Bleu",
+      Capacite: 256,
+      Grade: "VERY_GOOD",
+      Prix: 1149,
+      Prix_reference: 1229,
+      Quantity: 3,
+      "Nom vendeur": "ATOUTEK",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-S24U-512-MINT-BLK",
+      Marque: "Samsung",
+      Modele: "Galaxy S24 Ultra",
+      Couleur: "Titane Noir",
+      Capacite: 512,
+      Grade: "MINT",
+      Prix: 1199,
+      Prix_reference: 1469,
+      Quantity: 4,
+      "Nom vendeur": "BACKMARKET",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-P8P-256-MINT-BAY",
+      Marque: "Google",
+      Modele: "Pixel 8 Pro",
+      Couleur: "Bleu Azur",
+      Capacite: 256,
+      Grade: "MINT",
+      Prix: 899,
+      Prix_reference: 1099,
+      Quantity: 0,
+      "Nom vendeur": "DRJL",
+      Status: "out_of_stock"
+    },
+    {
+      sku: "XIA-14P-512-VGOOD-BLK",
+      Marque: "Xiaomi",
+      Modele: "14 Pro",
+      Couleur: "Noir",
+      Capacite: 512,
+      Grade: "VERY_GOOD",
+      Prix: 899,
+      Prix_reference: 999,
+      Quantity: 6,
+      "Nom vendeur": "AVEGOTT",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP15-128-GOOD-PINK",
+      Marque: "Apple",
+      Modele: "iPhone 15",
+      Couleur: "Rose",
+      Capacite: 128,
+      Grade: "GOOD",
+      Prix: 799,
+      Prix_reference: 969,
+      Quantity: 2,
+      "Nom vendeur": "2GiC",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-S24P-256-VGOOD-VLT",
+      Marque: "Samsung",
+      Modele: "Galaxy S24+",
+      Couleur: "Violet",
+      Capacite: 256,
+      Grade: "VERY_GOOD",
+      Prix: 899,
+      Prix_reference: 1169,
+      Quantity: 3,
+      "Nom vendeur": "ATOUTEK",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-P8-128-GOOD-ROSE",
+      Marque: "Google",
+      Modele: "Pixel 8",
+      Couleur: "Rose",
+      Capacite: 128,
+      Grade: "GOOD",
+      Prix: 649,
+      Prix_reference: 799,
+      Quantity: 0,
+      "Nom vendeur": "BACKMARKET",
+      Status: "out_of_stock"
+    },
+    {
+      sku: "XIA-13T-256-FAIR-BLUE",
+      Marque: "Xiaomi",
+      Modele: "13T",
+      Couleur: "Bleu",
+      Capacite: 256,
+      Grade: "FAIR",
+      Prix: 449,
+      Prix_reference: 649,
+      Quantity: 4,
+      "Nom vendeur": "DRJL",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP14PM-1024-MINT-GOLD",
+      Marque: "Apple",
+      Modele: "iPhone 14 Pro Max",
+      Couleur: "Or",
+      Capacite: 1024,
+      Grade: "MINT",
+      Prix: 1199,
+      Prix_reference: 1379,
+      Quantity: 2,
+      "Nom vendeur": "AVEGOTT",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-ZF5-512-MINT-BLK",
+      Marque: "Samsung",
+      Modele: "Galaxy Z Fold 5",
+      Couleur: "Noir",
+      Capacite: 512,
+      Grade: "MINT",
+      Prix: 1599,
+      Prix_reference: 1899,
+      Quantity: 1,
+      "Nom vendeur": "2GiC",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-PF-256-MINT-PORC",
+      Marque: "Google",
+      Modele: "Pixel Fold",
+      Couleur: "Porcelaine",
+      Capacite: 256,
+      Grade: "MINT",
+      Prix: 1599,
+      Prix_reference: 1899,
+      Quantity: 0,
+      "Nom vendeur": "ATOUTEK",
+      Status: "out_of_stock"
+    },
+    {
+      sku: "XIA-MF3-512-VGOOD-BLK",
+      Marque: "Xiaomi",
+      Modele: "Mix Fold 3",
+      Couleur: "Noir",
+      Capacite: 512,
+      Grade: "VERY_GOOD",
+      Prix: 1299,
+      Prix_reference: 1499,
+      Quantity: 2,
+      "Nom vendeur": "BACKMARKET",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP14P-256-VGOOD-PURP",
+      Marque: "Apple",
+      Modele: "iPhone 14 Pro",
+      Couleur: "Violet",
+      Capacite: 256,
+      Grade: "VERY_GOOD",
+      Prix: 999,
+      Prix_reference: 1169,
+      Quantity: 4,
+      "Nom vendeur": "DRJL",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-S23U-512-GOOD-GRN",
+      Marque: "Samsung",
+      Modele: "Galaxy S23 Ultra",
+      Couleur: "Vert",
+      Capacite: 512,
+      Grade: "GOOD",
+      Prix: 999,
+      Prix_reference: 1199,
+      Quantity: 3,
+      "Nom vendeur": "AVEGOTT",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-P7P-256-MINT-HAZ",
+      Marque: "Google",
+      Modele: "Pixel 7 Pro",
+      Couleur: "Gris Orageux",
+      Capacite: 256,
+      Grade: "MINT",
+      Prix: 699,
+      Prix_reference: 899,
+      Quantity: 5,
+      "Nom vendeur": "2GiC",
+      Status: "validated"
+    },
+    {
+      sku: "XIA-12TP-256-VGOOD-BLUE",
+      Marque: "Xiaomi",
+      Modele: "12T Pro",
+      Couleur: "Bleu",
+      Capacite: 256,
+      Grade: "VERY_GOOD",
+      Prix: 549,
+      Prix_reference: 749,
+      Quantity: 3,
+      "Nom vendeur": "ATOUTEK",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP13PM-512-MINT-BLUE",
+      Marque: "Apple",
+      Modele: "iPhone 13 Pro Max",
+      Couleur: "Bleu Alpin",
+      Capacite: 512,
+      Grade: "MINT",
+      Prix: 899,
+      Prix_reference: 1099,
+      Quantity: 2,
+      "Nom vendeur": "BACKMARKET",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-A54-128-GOOD-VLT",
+      Marque: "Samsung",
+      Modele: "Galaxy A54 5G",
+      Couleur: "Violet",
+      Capacite: 128,
+      Grade: "GOOD",
+      Prix: 349,
+      Prix_reference: 449,
+      Quantity: 7,
+      "Nom vendeur": "DRJL",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-P7-128-FAIR-SAGE",
+      Marque: "Google",
+      Modele: "Pixel 7",
+      Couleur: "Vert Sauge",
+      Capacite: 128,
+      Grade: "FAIR",
+      Prix: 449,
+      Prix_reference: 649,
+      Quantity: 0,
+      "Nom vendeur": "AVEGOTT",
+      Status: "out_of_stock"
+    },
+    {
+      sku: "XIA-RN12P-256-GOOD-BLK",
+      Marque: "Xiaomi",
+      Modele: "Redmi Note 12 Pro",
+      Couleur: "Noir",
+      Capacite: 256,
+      Grade: "GOOD",
+      Prix: 299,
+      Prix_reference: 399,
+      Quantity: 8,
+      "Nom vendeur": "2GiC",
+      Status: "validated"
+    },
+    {
+      sku: "APL-IP13-128-VGOOD-PINK",
+      Marque: "Apple",
+      Modele: "iPhone 13",
+      Couleur: "Rose",
+      Capacite: 128,
+      Grade: "VERY_GOOD",
+      Prix: 599,
+      Prix_reference: 749,
+      Quantity: 4,
+      "Nom vendeur": "ATOUTEK",
+      Status: "validated"
+    },
+    {
+      sku: "SAM-ZF4-256-GOOD-GRY",
+      Marque: "Samsung",
+      Modele: "Galaxy Z Flip 4",
+      Couleur: "Gris",
+      Capacite: 256,
+      Grade: "GOOD",
+      Prix: 699,
+      Prix_reference: 899,
+      Quantity: 2,
+      "Nom vendeur": "BACKMARKET",
+      Status: "validated"
+    },
+    {
+      sku: "GOO-P6P-128-FAIR-BLK",
+      Marque: "Google",
+      Modele: "Pixel 6 Pro",
+      Couleur: "Noir",
+      Capacite: 128,
+      Grade: "FAIR",
+      Prix: 399,
+      Prix_reference: 599,
+      Quantity: 3,
+      "Nom vendeur": "DRJL",
+      Status: "validated"
+    },
+    {
+      sku: "XIA-X6P-256-MINT-BLK",
+      Marque: "Xiaomi",
+      Modele: "POCO X6 Pro",
+      Couleur: "Noir",
+      Capacite: 256,
+      Grade: "MINT",
+      Prix: 349,
+      Prix_reference: 449,
+      Quantity: 6,
+      "Nom vendeur": "AVEGOTT",
+      Status: "validated"
+    }
+  ]
+};

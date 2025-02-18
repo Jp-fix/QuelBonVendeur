@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuelBonVendeur - Gestion des Stocks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/assets/css/activeStockManagement.css">
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-6">
+        
+<!-- Navigation -->
+<div class="nav-container">
+    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
+        <h1 class="text-2xl font-bold">
+            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                QuelBonVendeur
+            </a>
+        </h1>
+        <div class="flex items-center gap-6">
+            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Vendeurs
+            </a>
+            <a href="/src/components/catalogue/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+                Catalogue
+            </a>
+        </div>
+<p></p>
+<!--         <select id="vendorSelect" class="filter-input w-64">
+            <option value="">Sélectionner un vendeur</option>
+        </select> -->
+    </div>
+</div>
+
+<!-- En-tête avec titre -->
+<header class="flex justify-between items-center py-4">
+    <h1 class="text-2xl font-bold text-gray-900 h1B009">Vue d'ensemble</h1>
+<!--     <div class="text-sm text-gray-500">
+        Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
+    </div> -->
+</header>
+
+<!-- Stats Dashboard -->
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">Tableau de bord</h2>
+        <p class="text-sm text-gray-500">Vue d'ensemble des indicateurs clés vs S-1</p>
+    </div>
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Catalogue QBP -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Catalogue QBP</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewCatalogue"></div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +XX%
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ProductStock -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">ProductStock (manque infos export)</div>
+                    <div class="text-2xl font-bold mt-1" id="overViewProductStock"></div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +XX%
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nombre de produits actifs -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Nombre de produits actifs en vente</div>
+                    <div class="text-2xl font-bold mt-1" id="overViewActiveProducts"></div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +XX%
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nombre de Model ID -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Model ID en vente</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewModelId"></div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +XX%
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nombre de Product ID -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Product ID en vente</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewProductId"></div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
+                    +XX%
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau de données -->
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">Détails Model ID en vente</h2>
+        <p class="text-sm text-gray-500">Vue détaillée des Model ID</p>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" >
+                        Model Id
+                    </th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Grade
+                    </th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Stock
+                    </th>
+                    <th scope="col" class="px-5 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Prix Moyen
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200" id="productsTableBody">
+                <!-- Les données seront injectées ici via JavaScript -->
+            </tbody>    
+        </table>
+    </div>
+</div>
+
+
+<!-- Monitoring Dashboard -->
+<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">Monitoring et Alertes</h2>
+        <p class="text-sm text-gray-500">Suivi des indicateurs de performances</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Evolution Partenaires -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Evolution Partenaires</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewPartner">+8.5%</div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-green-100 text-green-800 rounded">
+                    Cette semaine
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Progression</span>
+                    <span>+275 SKUs</span>
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-10/12 bg-green-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model ID en Attente -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">Model ID en Attente</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewWaitingModelId">28%</div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                    686 à activer
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Sans SKU</span>
+                    <span>686 / 2,450</span>
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-[28%] bg-yellow-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKUs Manquants -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">SKUs Manquants</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewMissingSku">215</div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-yellow-100 text-yellow-800 rounded">
+                    À matcher
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Détectés ailleurs</span>
+                    <span>215 produits</span>
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-3/12 bg-yellow-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKUs matchés sans stock -->
+        <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <div class="text-sm text-gray-500">SKUs matchés sans stock</div>
+                    <div class="text-2xl font-bold mt-1" id="overviewSkuNoStock">312</div>
+                </div>
+                <div class="text-sm px-2 py-1 bg-orange-100 text-orange-800 rounded">
+                    À approvisionner
+                </div>
+            </div>
+            <div class="mt-2">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="text-gray-500">Du total matchés</span>
+                    <span>312 / 3 245</span>
+                </div>
+                <div class="h-2 bg-white rounded-full">
+                    <div class="h-full w-[9.6%] bg-orange-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+    <script src="index.js" type="module"></script>
+</body>
+</html>
