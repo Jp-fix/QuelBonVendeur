@@ -10,8 +10,8 @@ function numberAsPercentage(num){
     }).format(num / 100)
 }
 
-document.getElementById("overviewCatalogue").textContent = fullData.metadata.stats.totalProduits
-document.getElementById("overViewProductStock").textContent = fullData.metadata.stats.produitEnStock
+document.getElementById("overviewProductStock").textContent = fullData.metadata.stats.totalProduits
+document.getElementById("overViewProductStock").textContent = "Data ?"
 function renderactiveProductKPI(){
     //• Décompte des ProductIDs où : - Stock > 0  - Prix > 0€ - Statut = Actif
     const activeProducts = fullData.products.filter(product =>
@@ -22,7 +22,7 @@ function renderactiveProductKPI(){
     document.getElementById("overViewActiveProducts").textContent = activeProducts
 }
 renderactiveProductKPI()
-function countUniqueModelId(){
+function countUniqueProductId(){
     const modelsCount = {}
     const dataSource = fullData.products
 
@@ -35,11 +35,11 @@ function countUniqueModelId(){
             modelsCount[model] = 1
         }
     })
-     document.getElementById("overviewModelId").textContent = Object.keys(modelsCount).length
+     document.getElementById("overviewProductId").textContent = Object.keys(modelsCount).length
 }
 countUniqueModelId()
 
-function countUniqueProductId(){
+function countUniqueModelId(){
     const productCount = {}
     const dataSource = fullData.products
     dataSource.forEach((product) => {
@@ -50,68 +50,103 @@ function countUniqueProductId(){
             productCount[productId] = 1
         }
     })
-    document.getElementById("overviewProductId").textContent = Object.keys(productCount).length
+    document.getElementById("overviewModelId").textContent = Object.keys(productCount).length
 } 
 countUniqueProductId()
+
+function countUniqueGradeModelId(){
+    const modelCount = {}
+    const dataSource = fullData.products
+    dataSource.forEach((model) => {
+        const gradeModelId = `${model.Marque} ${model.Modele} ${model.Capacite} ${model.Couleur} ${model.Grade}`
+        if(modelCount[gradeModelId]){
+            modelCount[gradeModelId] += 1
+        } else {
+            modelCount[gradeModelId] = 1
+        }
+    })
+    document.getElementById("overviewGradeModelId").textContent = Object.keys(modelCount).length
+}
+countUniqueGradeModelId()
+
+function activeSku (){
+    const countSku = fullData.products.filter(sku => 
+        sku.sku = !null &&
+        sku.Quantity > 0
+    ).length
+    document.getElementById("activeSku").textContent = countSku
+}
+activeSku()
+
+function noStockSku (){
+    const countnoStockSku = fullData.products.filter(sku => 
+        sku.sku = !null &&
+        sku.Quantity === 0
+    ).length
+    document.getElementById("noStockSku").textContent = countnoStockSku
+}
+noStockSku()
+
+
+
+
+
+
+
+
+
 
 function populateTable(){
     const dataSource = sampleData.products
     const tableBody = document.getElementById("productsTableBody")
     tableBody.innerHTML = ""
 
+    const averagePriceByModeliD = {}
+    dataSource.forEach(product => {
+        const modelId = `
+            ${product.Marque} 
+            ${product.Modele} 
+            ${product.Capacite} 
+            ${product.Couleur} `
+        if (!averagePriceByModeliD[modelId]){
+            averagePriceByModeliD[modelId] = {
+                totalPrice: 0,
+                count : 0
+            }
+        }
+        averagePriceByModeliD[modelId].totalPrice += product.Prix
+        averagePriceByModeliD[modelId].count += 1
+    })
+
     dataSource.forEach((product) => {
-        const productId = `${product.Marque} ${product.Modele} ${product.Capacite} ${product.Couleur}`
+        const modelId = `
+            ${product.Marque} 
+            ${product.Modele} 
+            ${product.Capacite} 
+            ${product.Couleur} `
+        const gradeModelId = `${product.Grade}`
+        const quantityModelId = `${product.Quantity}`
+        const averagePriceModelId = (averagePriceByModeliD[modelId].totalPrice/averagePriceByModeliD[modelId].count).toFixed(0)
+        const margeQBP = (averagePriceModelId * 0.09)
         const tableRow = `
                     <tr>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${productId}
+                    ${modelId}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium text-gray-900">${product.Grade}</div>
+                    <div class="text-sm font-medium text-gray-900">${gradeModelId}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${"a faire"}
+                    ${quantityModelId}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    ${product.Prix} €
+                    ${averagePriceModelId} €
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    ${margeQBP} €
                 </td>
             </tr>`
         tableBody.innerHTML += tableRow;
     })
 }
 populateTable()
-
-function matchedSkuKPI(){
-    // Nombre de SKU matché sur notre catalogue
-}
-/**
- *  * END | TABLEAU DE BORD - Vue d'ensemble des indicateurs clés
- */
-
-function partnairTrendKPI(){
-    // Évolution du nombre de SKU matché par nos partenaires
-}
-
-function waitingModelIdKPI(){
-    // Model ID en attente d'un match
-}
-
-function missingSkuKPI(){
-    // SKU manquants
-}
-
-function noStockSkuKPI(){
-    // SKU matché mais pas de stock
-}
-
-
-function aez(){
-    
-}
-
-
-
-
-
-
-/* CODE GÉNÉRÉ PAR IA */
