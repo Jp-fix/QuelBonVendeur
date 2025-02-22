@@ -4,7 +4,7 @@ import { APP_DATA as sampleData } from "../../data/sampleData.js";
 document.getElementById("overviewProductStock").textContent = fullData.metadata.stats.totalProduits
 document.getElementById("overViewProductStock").textContent = "Data ?"
 
-function renderactiveProductKPI(){
+function renderActiveProductKPI(){
     const activeProducts = fullData.products.filter(product =>
         product.Quantity > 0 &&
         product.Prix > 0 &&
@@ -12,7 +12,7 @@ function renderactiveProductKPI(){
     ).length
     document.getElementById("overViewActiveProducts").textContent = activeProducts
 }
-renderactiveProductKPI()
+renderActiveProductKPI()
 function countUniqueProductId(){
     const modelsCount = {}
     const dataSource = fullData.products
