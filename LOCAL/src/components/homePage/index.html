@@ -6,322 +6,503 @@
     <title>QuelBonVendeur - Gestion des Stocks</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/src/assets/css/activeStockManagement.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .dashboard-gradient {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen p-6">
+<body class="bg-gray-50 dashboard-gradient">
+    <div class="min-h-screen p-6 max-w-7xl mx-auto">
         
 <!-- Navigation -->
-<div class="nav-container">
-    <div class="p-4 flex items-center justify-between flex-wrap gap-4">
-        <h1 class="text-2xl font-bold">
-            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+<nav class="nav-container mb-6 card-shadow">
+    <div class="px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+        <h1 class="text-2xl font-bold flex items-center">
+            <a href="/src/components/stockManagement/index.html" class="nav-link text-gray-800 hover:text-blue-600 flex items-center">
+                <span class="text-blue-600 mr-2"><i class="fas fa-chart-line"></i></span>
                 QuelBonVendeur
             </a>
         </h1>
-        <div class="flex items-center gap-6">
-            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+        <div class="flex items-center gap-8">
+            <a href="/src/components/vendorDetails/index.html" class="nav-link text-gray-700 hover:text-blue-600 flex items-center">
+                <span class="mr-2"><i class="fas fa-store"></i></span>
                 Vendeurs
             </a>
-            <a href="/src/components/catalogue/index.html" class="nav-link text-gray-800 hover:text-blue-600">
+            <a href="/src/components/catalogue/index.html" class="nav-link text-gray-700 hover:text-blue-600 flex items-center">
+                <span class="mr-2"><i class="fas fa-tags"></i></span>
                 Catalogue
             </a>
         </div>
-<p></p>
-<!--         <select id="vendorSelect" class="filter-input w-64">
-            <option value="">Sélectionner un vendeur</option>
-        </select> -->
     </div>
-</div>
+</nav>
 
 <!-- En-tête avec titre -->
-<header class="flex justify-between items-center py-4">
-    <h1 class="text-2xl font-bold text-gray-900 h1B009">Vue d'ensemble</h1>
-<!--     <div class="text-sm text-gray-500">
-        Dernière mise à jour: <span id="lastUpdate" class="font-medium">-</span>
-    </div> -->
+<header class="flex justify-between items-center pb-6">
+    <div>
+        <h1 class="text-3xl font-bold text-gray-900">Vue d'ensemble</h1>
+        <p class="text-gray-500 mt-1">Tableau de bord analytique</p>
+    </div>
+    <div class="text-sm bg-white py-2 px-4 rounded-full flex items-center shadow-sm">
+        <i class="fas fa-sync-alt text-blue-500 mr-2"></i>
+        <span id="lastUpdate" class="font-medium">Mis à jour aujourd'hui</span>
+    </div>
 </header>
 
 
 <!-- Stats Dashboard -->
-<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-    <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Tableau de bord</h2>
-        <p class="text-sm text-gray-500">Vue d'ensemble des indicateurs clés vs S-1</p>
+<div class="bg-white rounded-xl card-shadow p-8 mb-8 transition-all card-hover">
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <span class="text-blue-500 mr-2"><i class="fas fa-chart-bar"></i></span>
+                Indicateurs clés
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">Performance vs semaine précédente</p>
+        </div>
+        <div class="text-sm">
+            <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center transition-all">
+                <span class="mr-2"><i class="fas fa-download"></i></span>
+                Exporter
+            </button>
+        </div>
     </div>
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Couverture du marché -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Couverture du marché</div>
-                    <div class="text-2xl font-bold mt-1" id="marketCoverage">Data ?</div>
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-globe"></i>
                 </div>
-                <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                    +XX%
+                <span class="text-sm font-medium text-gray-600">Couverture du marché</span>
+            </div>
+            <div class="flex justify-between items-end">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="marketCoverage">--</div>
+                </div>
+                <div class="flex items-center text-sm font-medium text-red-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
                 </div>
             </div>
         </div>
+        
         <!-- ProductStock -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">ProductStock</div>
-                    <div class="text-2xl font-bold mt-1" id="overviewProductStock"></div>
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-box"></i>
                 </div>
-                <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                    +XX%
+                <span class="text-sm font-medium text-gray-600">Stock produits</span>
+            </div>
+            <div class="flex justify-between items-end">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="overviewProductStock">--</div>
+                </div>
+                <div class="flex items-center text-sm font-medium text-red-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-indigo-500 rounded-full"></div>
                 </div>
             </div>
         </div>
+        
         <!-- Nombre de produits actifs -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Nombre de produits actifs en vente</div>
-                    <div class="text-2xl font-bold mt-1" id="overViewActiveProducts"></div>
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-tag"></i>
                 </div>
-                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                    +XX%
+                <span class="text-sm font-medium text-gray-600">Produits actifs</span>
+            </div>
+            <div class="flex justify-between items-end">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="overViewActiveProducts">--</div>
+                </div>
+                <div class="flex items-center text-sm font-medium text-green-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-green-500 rounded-full"></div>
                 </div>
             </div>
         </div>
-        <!-- Nombre de Product ID -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Product ID en vente</div>
-                    <div class="text-2xl font-bold mt-1" id="overviewProductId"></div>
+        
+        <!-- Product ID -->
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-barcode"></i>
                 </div>
-                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                    +XX%
+                <span class="text-sm font-medium text-gray-600">Product ID en vente</span>
+            </div>
+            <div class="flex justify-between items-end">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="overviewProductId">--</div>
+                </div>
+                <div class="flex items-center text-sm font-medium text-green-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-purple-500 rounded-full"></div>
                 </div>
             </div>
         </div>
-        <!-- Nombre de Model ID -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">Model ID en vente</div>
-                    <div class="text-2xl font-bold mt-1" id="overviewModelId"></div>
+        
+        <!-- Model ID -->
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-sitemap"></i>
                 </div>
-                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                    +XX%
+                <span class="text-sm font-medium text-gray-600">Model ID en vente</span>
+            </div>
+            <div class="flex justify-between items-end">
+                <div>
+                    <div class="text-3xl font-bold text-gray-900" id="overviewModelId">--</div>
+                </div>
+                <div class="flex items-center text-sm font-medium text-green-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-amber-500 rounded-full"></div>
                 </div>
             </div>
         </div>
-        <!-- Nombre de Model ID Gradé -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
+        
+        <!-- Model ID Gradé -->
+        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl p-5 border border-gray-100 transition-all hover:border-blue-100">
+            <div class="flex items-center mb-3">
+                <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mr-3">
+                    <i class="fas fa-award"></i>
+                </div>
+                <span class="text-sm font-medium text-gray-600">Model ID Gradés</span>
+            </div>
+            <div class="flex justify-between items-end">
                 <div>
-                    <div class="text-sm text-gray-500">Model ID Gradés en vente</div>
-                    <div class="text-2xl font-bold mt-1" id="overviewGradeModelId"></div>
+                    <div class="text-3xl font-bold text-gray-900" id="overviewGradeModelId">--</div>
                 </div>
-                <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                    +XX%
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
+                <div class="flex items-center text-sm font-medium text-green-500">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span>+XX%</span>
                 </div>
             </div>
-        </div>
-        <!-- ProductStock -->
-        <div class="bg-gray-50 rounded-lg p-4">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <div class="text-sm text-gray-500">ProductStock (manque infos export)</div>
-                    <div class="text-2xl font-bold mt-1" id="overViewProductStock"></div>
-                </div>
-                <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                    +XX%
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="flex justify-between text-sm mb-2">
-                </div>
-                <div class="h-2 bg-white rounded-full">
-                    <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
+            <div class="mt-4">
+                <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full w-8/12 bg-teal-500 rounded-full"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Monitoring Dashboard -->
-<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-    <div class="mb-4">
-        <h2 class="text-lg font-semibold text-gray-900">Monitoring</h2>
-        <p class="text-sm text-gray-500">Vue d'ensemble des indicateurs de suivi</p>
-    </div>
-<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-    <!-- Modle ID sans SKU -->
-    <div class="bg-gray-50 rounded-lg p-4">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <div class="text-sm text-gray-500">Model ID sans SKU</div>
-                <div class="text-2xl font-bold mt-1" id="marketCoverage">Data ?</div>
-            </div>
-            <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                +XX%
-            </div>
+<div class="bg-white rounded-xl card-shadow p-8 mb-8 transition-all card-hover">
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <span class="text-indigo-500 mr-2"><i class="fas fa-tasks"></i></span>
+                Monitoring
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">État actuel des indicateurs de suivi</p>
         </div>
-        <div class="mt-2">
-            <div class="flex justify-between text-sm mb-2">
-            </div>
-            <div class="h-2 bg-white rounded-full">
-                <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
-            </div>
+        <div>
+            <select class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg border-0 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option>Cette semaine</option>
+                <option>Ce mois</option>
+                <option>Ce trimestre</option>
+            </select>
         </div>
-    </div>
-    <!-- Modle ID sans SKU -->
-    <div class="bg-gray-50 rounded-lg p-4">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <div class="text-sm text-gray-500">Model ID avec SKU</div>
-                <div class="text-2xl font-bold mt-1" id="marketCoverage">Data ?</div>
-            </div>
-            <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                +XX%
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex justify-between text-sm mb-2">
-            </div>
-            <div class="h-2 bg-white rounded-full">
-                <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
-            </div>
-        </div>
-    </div>
-    <!-- % SKU Matchés vs SKU disponibles -->
-    <div class="bg-gray-50 rounded-lg p-4">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <div class="text-sm text-gray-500">% SKU Matchés vs SKU disponibles</div>
-                <div class="text-2xl font-bold mt-1" id="marketCoverage">Data ?</div>
-            </div>
-            <div class="text-sm px-2 py-1 bg-red-100 text-red-800 rounded">
-                +XX%
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex justify-between text-sm mb-2">
-            </div>
-            <div class="h-2 bg-white rounded-full">
-                <div class="h-full w-8/12 bg-red-500 rounded-full"></div>
-            </div>
-        </div>
-    </div>
-    <!-- SKU actifs -->
-    <div class="bg-gray-50 rounded-lg p-4">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <div class="text-sm text-gray-500">SKU actifs</div>
-                <div class="text-2xl font-bold mt-1" id="activeSku"></div>
-            </div>
-            <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                +XX%
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex justify-between text-sm mb-2">
-            </div>
-            <div class="h-2 bg-white rounded-full">
-                <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
-            </div>
-        </div>
-    </div>
-    <!-- SKU Matchés sans Stock -->
-    <div class="bg-gray-50 rounded-lg p-4">
-        <div class="flex justify-between items-start mb-4">
-            <div>
-                <div class="text-sm text-gray-500">SKU Matchés sans Stock</div>
-                <div class="text-2xl font-bold mt-1" id="noStockSku"></div>
-            </div>
-            <div class="text-sm px-2 py-1 bg-blue-100 text-blue-800 rounded">
-                +XX%
-            </div>
-        </div>
-        <div class="mt-2">
-            <div class="flex justify-between text-sm mb-2">
-            </div>
-            <div class="h-2 bg-white rounded-full">
-                <div class="h-full w-8/12 bg-blue-500 rounded-full"></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<!-- Tableau de données -->
-<div class="bg-white rounded-xl shadow-sm p-6 mb-6">
-    <div class="mb-6">
-        <h2 class="text-lg font-semibold text-gray-900">Détails Model ID en vente</h2>
-        <p class="text-sm text-gray-500">Vue détaillée des Model ID</p>
     </div>
     
-    <div class="overflow-x-auto ring-1 ring-gray-200 rounded-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Model ID sans SKU -->
+        <div class="relative overflow-hidden bg-white rounded-xl border border-gray-200 transition-all hover:border-indigo-200 shadow-sm">
+            <div class="absolute right-0 top-0 h-full w-1 bg-red-400"></div>
+            <div class="p-5">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 rounded-full bg-red-50 text-red-500 mr-4">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3 class="font-medium text-gray-900">Model ID sans SKU</h3>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-3xl font-bold text-gray-900" id="marketCoverage">--</div>
+                    <div class="flex items-center text-sm font-medium text-red-500">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>+XX%</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="w-full">
+                        <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full w-8/12 bg-red-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-indigo-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Model ID avec SKU -->
+        <div class="relative overflow-hidden bg-white rounded-xl border border-gray-200 transition-all hover:border-indigo-200 shadow-sm">
+            <div class="absolute right-0 top-0 h-full w-1 bg-orange-400"></div>
+            <div class="p-5">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 rounded-full bg-orange-50 text-orange-500 mr-4">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3 class="font-medium text-gray-900">Model ID avec SKU</h3>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-3xl font-bold text-gray-900" id="modelIdWithSku">--</div>
+                    <div class="flex items-center text-sm font-medium text-red-500">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>+XX%</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="w-full">
+                        <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full w-8/12 bg-orange-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-indigo-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- % SKU Matchés -->
+        <div class="relative overflow-hidden bg-white rounded-xl border border-gray-200 transition-all hover:border-indigo-200 shadow-sm">
+            <div class="absolute right-0 top-0 h-full w-1 bg-yellow-400"></div>
+            <div class="p-5">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 rounded-full bg-yellow-50 text-yellow-600 mr-4">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3 class="font-medium text-gray-900">SKU Matchés vs disponibles</h3>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-3xl font-bold text-gray-900" id="skuMatchPercentage">--</div>
+                    <div class="flex items-center text-sm font-medium text-yellow-600">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>+XX%</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="w-full">
+                        <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full w-8/12 bg-yellow-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-indigo-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SKU actifs -->
+        <div class="relative overflow-hidden bg-white rounded-xl border border-gray-200 transition-all hover:border-indigo-200 shadow-sm">
+            <div class="absolute right-0 top-0 h-full w-1 bg-green-400"></div>
+            <div class="p-5">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 rounded-full bg-green-50 text-green-600 mr-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="font-medium text-gray-900">SKU actifs</h3>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-3xl font-bold text-gray-900" id="activeSku">--</div>
+                    <div class="flex items-center text-sm font-medium text-green-500">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>+XX%</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="w-full">
+                        <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full w-8/12 bg-green-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-indigo-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SKU Matchés sans Stock -->
+        <div class="relative overflow-hidden bg-white rounded-xl border border-gray-200 transition-all hover:border-indigo-200 shadow-sm">
+            <div class="absolute right-0 top-0 h-full w-1 bg-blue-400"></div>
+            <div class="p-5">
+                <div class="flex items-center mb-4">
+                    <div class="p-2 rounded-full bg-blue-50 text-blue-600 mr-4">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <h3 class="font-medium text-gray-900">SKU Matchés sans Stock</h3>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div class="text-3xl font-bold text-gray-900" id="noStockSku">--</div>
+                    <div class="flex items-center text-sm font-medium text-blue-500">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span>+XX%</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="w-full">
+                        <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full w-8/12 bg-blue-400 rounded-full"></div>
+                        </div>
+                    </div>
+                    <button class="ml-4 text-gray-400 hover:text-indigo-500">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Tableau de données -->
+<div class="bg-white rounded-xl card-shadow p-8 mb-8 transition-all card-hover">
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <span class="text-blue-500 mr-2"><i class="fas fa-table"></i></span>
+                Détails Model ID en vente
+            </h2>
+            <p class="text-sm text-gray-500 mt-1">Vue détaillée des Model ID</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <input type="text" placeholder="Rechercher..." class="pl-9 pr-4 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm" />
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <button class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-lg flex items-center transition-all text-sm">
+                <span class="mr-2"><i class="fas fa-filter"></i></span>
+                Filtres
+            </button>
+        </div>
+    </div>
+    
+    <div class="overflow-hidden ring-1 ring-gray-200 rounded-xl shadow-sm">
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
                 <tr class="bg-gray-50">
-                    <th data-sort="modelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
-                        Model Id
+                    <th data-sort="modelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center">
+                            Model Id
+                            <span class="ml-2 text-gray-400"><i class="fas fa-sort"></i></span>
+                        </div>
                     </th>
-                    <th data-sort="gradeModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
-                        Grade
+                    <th data-sort="gradeModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center">
+                            Grade
+                            <span class="ml-2 text-gray-400"><i class="fas fa-sort"></i></span>
+                        </div>
                     </th>
-                    <th data-sort="quantityModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
-                        Stock
+                    <th data-sort="quantityModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center">
+                            Stock
+                            <span class="ml-2 text-gray-400"><i class="fas fa-sort"></i></span>
+                        </div>
                     </th>
-                    <th data-sort="averagePriceModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
-                        Prix.moy
+                    <th data-sort="averagePriceModelId" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center">
+                            Prix.moy
+                            <span class="ml-2 text-gray-400"><i class="fas fa-sort"></i></span>
+                        </div>
                     </th>
-                    <th data-sort="margeQBP" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
-                        Marge.moy QBP
+                    <th data-sort="margeQBP" scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap cursor-pointer hover:bg-gray-100 transition-colors">
+                        <div class="flex items-center">
+                            Marge.moy QBP
+                            <span class="ml-2 text-gray-400"><i class="fas fa-sort"></i></span>
+                        </div>
+                    </th>
+                    <th scope="col" class="px-6 py-4 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider whitespace-nowrap">
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200" id="productsTableBody">
                 <!-- Injection des données JS via populateTable() -->
+                <!-- Ligne de chargement par défaut -->
+                <tr class="hover:bg-gray-50 transition-colors">
+                    <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                        <div class="flex items-center justify-center">
+                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Chargement des données...
+                        </div>
+                    </td>
+                </tr>
             </tbody>    
         </table>
     </div>
+
+    <div class="mt-6 flex items-center justify-between text-sm">
+        <div class="text-gray-600">
+            Affichage de <span class="font-medium">1-10</span> sur <span class="font-medium">100</span> résultats
+        </div>
+        <div class="flex items-center space-x-2">
+            <button class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">1</button>
+            <button class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">2</button>
+            <button class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">3</button>
+            <span class="px-2">...</span>
+            <button class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">10</button>
+            <button class="px-3 py-2 bg-white border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
 </div>
-    <script src="index.js" type="module"></script>
+
+<footer class="py-6 text-center text-gray-500 text-sm">
+    <div class="max-w-7xl mx-auto px-4">
+        <p>© 2025 QuelBonVendeur. Tous droits réservés.</p>
+    </div>
+</footer>
+<script src="../../data/data.js"></script>
+<script src="index.js" type="module"></script>
 </body>
 </html>
