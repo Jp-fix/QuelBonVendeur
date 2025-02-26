@@ -2,7 +2,7 @@ import { APP_DATA as fullData } from "../../data/data.js";
 import { APP_DATA as sampleData } from "../../data/sampleData.js";
 
 document.getElementById("overviewProductStock").textContent = fullData.metadata.stats.totalProduits
-document.getElementById("overViewProductStock").textContent = "Data ?"
+document.getElementById("marketCoverage").textContent = `${(3242 / 12244 * 100).toFixed(2)} %`
 
 function renderActiveProductKPI(){
     const activeProducts = fullData.products.filter(product =>
