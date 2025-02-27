@@ -114,6 +114,30 @@ function getBestPriceProductCount(){
         } else {
             noCompetitivePrice++
         }
+        if(bestPriceProduct > (competitivePrice + noCompetitivePrice)){
+            document.getElementById('marketPosition').innerHTML = "Compétitif"   
+            document.getElementById('marketPosition').classList = "price-value min"   
+        } else if ((bestPriceProduct+competitivePrice) < noCompetitivePrice  ){
+            document.getElementById('marketPosition').innerHTML = "Dans la moyenne"   
+            document.getElementById('marketPosition').classList = "price-value median" 
+        } else {
+            document.getElementById('marketPosition').innerHTML = "En dessous de la moyenne"   
+            document.getElementById('marketPosition').classList = "price-value max" 
+        }
+
+        if(((bestPriceProduct / vendorProductsInStock.length)*100) > 80 ){
+            document.getElementById('buyBoxPosition').innerHTML = "Compétitif"   
+            document.getElementById('buyBoxPosition').classList = "price-value min"   
+        } else if (((bestPriceProduct / vendorProductsInStock.length)*100) > 60){
+            document.getElementById('buyBoxPosition').innerHTML = "Dans la moyenne"   
+            document.getElementById('buyBoxPosition').classList = "price-value median" 
+        } else {
+            document.getElementById('buyBoxPosition').innerHTML = "En dessous de la moyenne"   
+            document.getElementById('buyBoxPosition').classList = "price-value max" 
+        }
+        console.log(((bestPriceProduct / vendorProductsInStock.length)*100))
+        
+
             document.getElementById("renderProductWithoutBuyBox").innerHTML +=`
     <tr class="${isCompetitive ? 'bg-blue-100' : noCompetitivePrice ? 'bg-red-100' : ""}">
         <td class="text-left">${vendorProduct.Modele} ${vendorProduct.Capacite}GO ${vendorProduct.Couleur}</td>
@@ -124,7 +148,7 @@ function getBestPriceProductCount(){
     </tr>`
         }
         
-        console.log("Produit sans meilleur prix:", vendorProduct.Modele,vendorProduct.Capacite,vendorProduct.Couleur,vendorProduct.Grade, "Prix:", vendorProduct.Prix + "€")
+       // console.log("Produit sans meilleur prix:", vendorProduct.Modele,vendorProduct.Capacite,vendorProduct.Couleur,vendorProduct.Grade, "Prix:", vendorProduct.Prix + "€")
     })
     document.getElementById('buyboxRate').textContent = `${((bestPriceProduct / vendorProductsInStock.length)*100).toFixed(2)}%`
     document.getElementById('buyboxCount').textContent = bestPriceProduct
