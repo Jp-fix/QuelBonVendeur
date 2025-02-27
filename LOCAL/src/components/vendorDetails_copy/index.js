@@ -67,13 +67,23 @@ function availableStockPercentage(){
 availableStockPercentage()
 }
 
+function isBuyBoxCompetitive(productPrice, buyBoxPrice){
+    if (!productPrice || !buyBoxPrice || buyBoxPrice <= 0 ){
+        return false
+    }
+    const priceDifference = ((productPrice - buyBoxPrice)/buyBoxPrice) * 100
+    return priceDifference <= 5
+}
 function getBestPriceProductCount(){
     const vendorProductsInStock = fullData.products.filter(product => 
         product["Nom vendeur"] === window.currentVendor &&
         product.Quantity > 0
     )
     let bestPriceProduct = 0
-    let productWithoutBuyBox = {}
+    let competitivePrice  = 0
+    let noCompetitivePrice = 0
+    let productWithoutBuyBox = []
+    document.getElementById("renderProductWithoutBuyBox").innerHTML = ""
 
     vendorProductsInStock.forEach(vendorProduct => {
     const similarProduct = fullData.products.filter(product =>
@@ -90,11 +100,36 @@ function getBestPriceProductCount(){
                             similarProduct.every(product => product.Prix >= vendorProduct.Prix)
         if (hasBestPrice){
             bestPriceProduct++
-        }
-    })
-    document.getElementById('buyboxRate').textContent = `${(bestPriceProduct / vendorProductsInStock.length).toFixed(2)*100}%`
-    document.getElementById('buyboxCount').textContent = bestPriceProduct
-    document.getElementById('buyboxBar').style.width = `${(bestPriceProduct / vendorProductsInStock.length).toFixed(2)*100}%`
-}
+        } else {
+            productWithoutBuyBox.push(vendorProduct)
 
-//console.log(fullData.products.forEach((item) => {console.log(item.Prix)}))
+        let renderBestPrice = "N/C"
+        if (similarProduct.length > 0){
+            renderBestPrice = Math.min(...similarProduct.map(product => product.Prix))
+        }
+
+        const isCompetitive = isBuyBoxCompetitive(vendorProduct.Prix,renderBestPrice)
+        if (isCompetitive){
+            competitivePrice++
+        } else {
+            noCompetitivePrice++
+        }
+            document.getElementById("renderProductWithoutBuyBox").innerHTML +=`
+    <tr class="${isCompetitive ? 'bg-blue-100' : noCompetitivePrice ? 'bg-red-100' : ""}">
+        <td class="text-left">${vendorProduct.Modele} ${vendorProduct.Capacite}GO ${vendorProduct.Couleur}</td>
+        <td class="text-right">${vendorProduct.Grade}</td>
+        <td class="text-right">${vendorProduct.Quantity}</td>
+        <td class="text-right">${vendorProduct.Prix}€</td>
+        <td class="text-right">${renderBestPrice}€</td>
+    </tr>`
+        }
+        
+        console.log("Produit sans meilleur prix:", vendorProduct.Modele,vendorProduct.Capacite,vendorProduct.Couleur,vendorProduct.Grade, "Prix:", vendorProduct.Prix + "€")
+    })
+    document.getElementById('buyboxRate').textContent = `${((bestPriceProduct / vendorProductsInStock.length)*100).toFixed(2)}%`
+    document.getElementById('buyboxCount').textContent = bestPriceProduct
+    document.getElementById('renderBuyboxCount').textContent = bestPriceProduct
+    document.getElementById('buyboxBar').style.width = `${(bestPriceProduct / vendorProductsInStock.length).toFixed(2)*100}%`
+    document.getElementById('competitivePrice').textContent = competitivePrice
+    document.getElementById('noCompetitivePrice').textContent = noCompetitivePrice
+}
