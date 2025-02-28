@@ -151,7 +151,7 @@ function getBestPriceProductCount(){
        // console.log("Produit sans meilleur prix:", vendorProduct.Modele,vendorProduct.Capacite,vendorProduct.Couleur,vendorProduct.Grade, "Prix:", vendorProduct.Prix + "€")
     })
     document.getElementById('buyboxRate').textContent = `${((bestPriceProduct / vendorProductsInStock.length)*100).toFixed(2)}%`
-    document.getElementById('buyboxCount').textContent = bestPriceProduct
+    document.getElementById('buyboxCount').textContent = `${bestPriceProduct}  `
     document.getElementById('renderBuyboxCount').textContent = bestPriceProduct
     document.getElementById('buyboxBar').style.width = `${(bestPriceProduct / vendorProductsInStock.length).toFixed(2)*100}%`
     document.getElementById('competitivePrice').textContent = competitivePrice
