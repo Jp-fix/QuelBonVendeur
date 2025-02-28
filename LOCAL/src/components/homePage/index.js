@@ -1,8 +1,12 @@
 import { APP_DATA as fullData } from "../../data/data.js";
-import { APP_DATA as sampleData } from "../../data/sampleData.js";
+
 
 document.getElementById("overviewProductStock").textContent = fullData.metadata.stats.totalProduits
 document.getElementById("marketCoverage").textContent = `${(3242 / 12244 * 100).toFixed(2)} %`
+
+let lastUpdate = new Date()
+document.getElementById("lastUpdate").textContent = lastUpdate.toDateString()
+console.log(lastUpdate.toDateString())
 
 function renderActiveProductKPI(){
     const activeProducts = fullData.products.filter(product =>
@@ -163,6 +167,9 @@ function populateTable(page = 1) {
 
     createPaginationControls(dataSource.length);
 }
+
+
+
 /* CODE GÉNÉRÉ PAR IA 👇 - GESTION TRI & PAGINATION TABLEAU */
 function createPaginationControls(totalItems) {
     // Supprimer les contrôles de pagination existants s'il y en a
